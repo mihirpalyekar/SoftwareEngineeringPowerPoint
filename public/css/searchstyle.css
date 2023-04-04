@@ -1,0 +1,126 @@
+.col-sm-3 {
+    height: 100vh;
+}
+
+.nav-item {
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    color: black;
+    line-clamp: 25px;
+    /* background-color: blue; */
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.icon {
+    margin-right: 20px;
+}
+
+.top-icon {
+    margin-bottom: 20px;
+}
+
+.signup {
+    border-radius: 100px;
+    box-shadow: none;
+    cursor: pointer;
+    background-color: #38A1F2;
+    color: white;
+    width: 80%;
+    line-height: 40px;
+}
+
+li .signup :hover {
+    opacity: 1;
+}
+
+#logoutUser {
+    cursor: pointer;
+}
+
+#logoutUser:hover {
+    color: #0B56B3;
+}
+
+
+/* break for search style */
+
+h3 {
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    width: 100%;
+    color: rgb(46, 44, 42);
+}
+
+.input-group {
+    margin: auto;
+    width: 80%;
+    margin-top: 10px;
+}
+
+.btn {
+    width: 100px;
+    border-color: rgb(46, 44, 42);
+    background-color: rgb(46, 44, 42);
+}
+
+.click {
+    color: white;
+    font-weight: bold;
+}
+
+.form-control {
+    border-color: rgb(46, 44, 42);
+}
+
+.border-top {
+    margin-top: 40px;
+    padding-top: 20px;
+}
+
+.user {
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.twitter-handle {
+    color: rgb(125, 126, 128);
+    margin-left: 30px;
+}
+
+.follow {
+    color: rgb(125, 126, 128);
+    margin-left: 30px;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 25px;
+    margin-left: 20px;
+    margin-top: 30px;
+}
+
+.edit {
+    background-color: transparent;
+    color: #38A1F2;
+    border-radius: 20px;
+    border-color: #38A1F2;
+    line-height: 40px;
+    margin: auto;
+    width: 150px;
+    font-weight: bold;
+}
+
+.edit:hover {
+    background-color: #6C757D
+}
+
+#creatTweet,
+#side-post,
+.signup {
+    background-color: rgb(46, 44, 42);
+}

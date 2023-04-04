@@ -1,0 +1,138 @@
+.col-sm-3 {
+    height: 100vh;
+}
+
+.nav-item {
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    color: black;
+    line-clamp: 25px;
+    /* background-color: blue; */
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.icon {
+    margin-right: 20px;
+}
+
+.top-icon {
+    margin-bottom: 20px;
+}
+
+.signup {
+    border-radius: 100px;
+    box-shadow: none;
+    cursor: pointer;
+    background-color: rgb(46, 44, 42);
+    color: white;
+    width: 80%;
+    line-height: 40px;
+}
+
+li .signup :hover {
+    opacity: 1;
+}
+
+#logoutUser {
+    cursor: pointer;
+}
+
+#logoutUser:hover {
+    color: #0B56B3;
+}
+
+
+/* break hor home style */
+
+h3 {
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    color: rgb(46, 44, 42);
+}
+
+.twitter-handle {
+    color: rgb(172, 179, 185);
+    margin-left: 10px;
+}
+
+h6 {
+    margin-top: 3px;
+}
+
+.user {
+    padding: 5px;
+}
+
+.mytweet {
+    color: rgb(138, 138, 138);
+    margin-left: 10px;
+    margin-right: 40px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.count {
+    padding-left: 7px;
+}
+
+.heart {
+    width: 50px;
+    height: 13px;
+    background-image: url('https://cssanimation.rocks/images/posts/steps/heart.png');
+    background-position: 0% 50%;
+    background-repeat: no-repeat;
+    background-size: 2900%;
+}
+
+.is-animating {
+    animation: heart-burst .5s steps(28) 1;
+}
+
+#creatTweet,
+#side-post,
+#creatClass {
+    background-color: rgb(46, 44, 42);
+}
+
+.data-name {
+    width: 100%;
+    font-weight: bold;
+    padding: 20px
+}
+
+.data-description {
+    width: 100%;
+    padding: 20px
+}
+
+.document-title {
+    font-weight: bold;
+}
+
+.alignment {
+    text-align: center;
+    padding: 30px;
+    padding-left: 250px;
+}
+
+.append-info {
+    width: 100%;
+    height: 28vh
+}
+
+.info-image {
+    width: 30%;
+    float: left;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.info-data {
+    width: 70%;
+    float: left;
+}

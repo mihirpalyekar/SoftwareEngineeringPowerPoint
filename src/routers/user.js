@@ -1,0 +1,31 @@
+const express = require('express');
+const auth = require('../middleware/auth').userAuth
+const router = new express.Router();
+const userControllers = require('../controllers/user.controller')
+const classRoomController = require('../controllers/classRoom.controller')
+
+router.post("/register/user", userControllers.Register)
+router.post("/login/user", userControllers.Login)
+router.get("/user/home", auth, userControllers.showHomePage)
+router.get("/user/loadHome", auth, userControllers.loadHome)
+router.post('/user/classRoom/uploadDocument', auth, userControllers.Upload.single('fileUpload'), userControllers.UploadDocument)
+router.get('/user/classRoom/getDocument', auth, userControllers.getDocument)
+router.post("/search", auth, userControllers.searchClassRoom)
+router.get("/loadSearch", auth, userControllers.loadSearch)
+router.get("/user/loadSearch", auth, userControllers.loadClassDetails)
+router.post("/user/loadSearch", auth, userControllers.loadClassRoom)
+router.get("/user/profile", auth, userControllers.Profile)
+router.get("/user/logout", auth, userControllers.Logout)
+router.patch('/user/profile/update', auth, userControllers.UpdateProfile)
+router.post('/user/follow', auth, userControllers.classRoomFollow)
+    //router.delete('/user/deleteProfile', auth, userControllers.DeleteProfile)
+    //router.post('/user/profile/uploadAvatar', auth, userControllers.Upload.single('avatar'), userControllers.uploadAvatar)
+    //router.delete('/user/profile/deleteAvatar', auth, userControllers.deleteAvatar)
+    //router.get('/user/avatar', userControllers.getAvatar)
+    //router.post("/user/logoutAll", auth, userControllers.LogoutAll)
+    //router.post('/user/search', auth, userControllers.searchUser)
+    //router.get("/user/follower", auth, userControllers.showFollower)
+    //router.get('/user/data', auth, userControllers.getData)
+    //router.get("/followers", auth, userControllers.Followers)
+    //router.get("/following", auth, userControllers.Following)
+module.exports = router;

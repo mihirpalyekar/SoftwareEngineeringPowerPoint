@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/loginstyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="/img/apple-icon-120x120.png">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="row no-gutters">
+        <div class="col no-gutters" id="div1">
+            <div class="leftside">
+                <div class="left-content">
+                    <div class="div1">You're one step away from the shiny new Class room</div>
+                    <div class="div2">We've added tons of cool features, including...</div>
+                    <div class="div3">
+                        <span class="hashbook">
+                            <h2><i class="fa fa-hashtag"></i></h2>
+                        </span>
+                        <div>
+                            <div class="div3-1">Explore</div>
+                            <div class="div3-2">Get the latest Task, assignments, and videos in one place.</div>
+                        </div>
+                    </div>
+                    <div class="div4">
+                        <span class="hashbook">
+                            <h2><i class="fa fa-bookmark"></i></h2>
+                        </span>
+                        <div>
+                            <div class="div4-1">Bookmarks</div>
+                            <div class="div4-2">Save the latest task for later.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col no-gutters" id="div2">
+            <div class="rightside">
+                <form class="login" id="loginForm">
+                    <table cellpadding="5">
+                        <tr>
+                            <td><input class="input2" type="email" id="login-email" name="email" placeholder="Email"
+                                    required="true" />
+                                <p id="p2"></p>
+                            </td>
+                            <td>
+                                <select class="input2 dropDown"  type="dropdown" id="login-dropdown" name="userType" required="true">
+                                    <option value="Student">Student</option>
+                                    <option value="Teacher">Teacher</option>
+                                </select>
+                                <p id="p1"></p>
+                            </td>
+                            <td><input class="input2" type="password" id="login-password" name="password" placeholder="Password"
+                                    required="true" />
+                                <p id="p1"></p>
+                            </td>
+                            <td>
+                                <button id="login-submit" form="loginForm" class="button1"  type="submit" value="submit">
+                                    <b>Log in</b>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+
+                <div class="right-content">
+                    <div>
+                        <img src="/img/teacher-clipart-google-classroom-5.png" class="rightImage" alt="">
+                    </div>
+                    <h1 class="header1">See what's happening in the class room right now</h1>
+                    <div>
+                        <h2 class="header2">Join Class Room today.</h2>
+                    </div>
+                    <div>
+                        <button type="button" class="signup" class="btn btn-primary" data-toggle="modal"
+                            data-target="#exampleModal">Sign up</button>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Create an account</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="registerForm">
+                                         <div class="form-group">
+                                            <label for="exampleInputFisrtname1">Name</label>
+                                            <input type="text" name="name" class="form-control" id="exampleInputFirstname1"
+                                                placeholder="First name" required='true' >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputAge1">Age</label>
+                                            <input type="text" name="age" class="form-control" id="exampleInputAge1"
+                                                placeholder="Age" required='true' >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputType1">User Type : </label>
+                                                <input type="radio" for="exampleInputType1" class="radio" name="userType" value="Student" checked> Student
+                                                <input type="radio" for="exampleInputType1" class="radio" name="userType" value="Teacher"> Teacher
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Email address</label>
+                                            <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                                                aria-describedby="emailHelp" placeholder="Enter email" required='true'>
+                                            <small id="emailHelp" class="form-text text-muted">We'll never share your
+                                                email with anyone else.</small>
+                                        </div>
+                
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Password</label>
+                                            <input type="password" name="password" class="form-control" id="exampleInputPassword1"
+                                                placeholder="Password" required='true' >
+                                        </div>
+                                        <button type="submit" form="registerForm" class="btn btn-primary signup" id="register-submit">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+        <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+        <script src="/js/login.js"></script>
+</body>
+
+</html>
