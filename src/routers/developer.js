@@ -1,0 +1,31 @@
+const express = require('express');
+const auth = require('../middleware/auth').developerAuth
+const router = new express.Router();
+const userControllers = require('../controllers/developer.controller')
+const classRoomController = require('./../controllers/chatRoom.controller')
+
+router.post("/register/developer", userControllers.Register)
+router.post("/login/developer", userControllers.Login)
+router.get("/developer/home", auth, userControllers.showHomePage)
+router.get("/developer/loadHome", auth, userControllers.loadHome)
+router.post('/developer/chatRoom/uploadDocument', auth, userControllers.Upload.single('fileUpload'), userControllers.UploadDocument)
+router.get('/developer/chatRoom/getDocument', auth, userControllers.getDocument)
+router.post("/search", auth, userControllers.searchClassRoom)
+router.get("/loadSearch", auth, userControllers.loadSearch)
+router.get("/developer/loadSearch", auth, userControllers.loadClassDetails)
+router.post("/developer/loadSearch", auth, userControllers.loadClassRoom)
+router.get("/developer/profile", auth, userControllers.Profile)
+router.get("/developer/logout", auth, userControllers.Logout)
+router.patch('/developer/profile/update', auth, userControllers.UpdateProfile)
+router.post('/developer/follow', auth, userControllers.classRoomFollow)
+    //router.delete('/developer/deleteProfile', auth, userControllers.DeleteProfile)
+    //router.post('/developer/profile/uploadAvatar', auth, userControllers.Upload.single('avatar'), userControllers.uploadAvatar)
+    //router.delete('/developer/profile/deleteAvatar', auth, userControllers.deleteAvatar)
+    //router.get('/developer/avatar', userControllers.getAvatar)
+    //router.post("/developer/logoutAll", auth, userControllers.LogoutAll)
+    //router.post('/developer/search', auth, userControllers.searchUser)
+    //router.get("/developer/follower", auth, userControllers.showFollower)
+    //router.get('/developer/data', auth, userControllers.getData)
+    //router.get("/followers", auth, userControllers.Followers)
+    //router.get("/following", auth, userControllers.Following)
+module.exports = router;

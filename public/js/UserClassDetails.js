@@ -7,7 +7,7 @@ $(document).ready(() => {
         };
         $.ajax({
             type: 'POST',
-            url: '/user/loadSearch',
+            url: '/developer/loadSearch',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -64,7 +64,7 @@ $(document).ready(() => {
 
         $.ajax({
             type: 'POST',
-            url: '/user/follow',
+            url: '/developer/follow',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -87,7 +87,7 @@ $(document).ready(() => {
                 }
             },
             error: function() {
-                alert('Error while login user')
+                alert('Error while login developer')
 
             }
         })

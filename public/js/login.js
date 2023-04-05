@@ -9,10 +9,10 @@ $(document).ready(function() {
             }
         });
 
-        if (data.userType == 'Teacher') {
+        if (data.userType == 'Manager') {
             $.ajax({
                 type: 'POST',
-                url: '/login/teacher',
+                url: '/login/manager',
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -22,14 +22,14 @@ $(document).ready(function() {
                     window.location.href = data.redirect;
                 },
                 error: function() {
-                    alert('Error while login teacher')
+                    alert('Error while login manager')
 
                 }
             })
         } else {
             $.ajax({
                 type: 'POST',
-                url: '/login/user',
+                url: '/login/developer',
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -39,7 +39,7 @@ $(document).ready(function() {
                     window.location.href = data.redirect;
                 },
                 error: function() {
-                    alert('Error while login user')
+                    alert('Error while login developer')
 
                 }
             })
@@ -59,10 +59,10 @@ $('#register-submit').click((e) => {
             data[element.name] = element.value;
         }
     })
-    if (data.userType == 'Teacher') {
+    if (data.userType == 'Manager') {
         $.ajax({
             type: 'POST',
-            url: '/register/teacher',
+            url: '/register/manager',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -72,14 +72,14 @@ $('#register-submit').click((e) => {
                 window.location.href = data.redirect;
             },
             error: function() {
-                alert('Error while creating teacher')
+                alert('Error while creating manager')
 
             }
         })
     } else {
         $.ajax({
             type: 'POST',
-            url: '/register/user',
+            url: '/register/developer',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -89,7 +89,7 @@ $('#register-submit').click((e) => {
                 window.location.href = data.redirect;
             },
             error: function() {
-                alert('Error while creating user')
+                alert('Error while creating developer')
 
             }
         })

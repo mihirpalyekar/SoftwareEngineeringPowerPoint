@@ -1,0 +1,382 @@
+const Developer = require('../models/developer')
+const UploadDocuments = require('../models/documents')
+const multer = require('multer');
+
+const ClassRoom = require('../models/chatRoom')
+
+const Document = require('../models/documents')
+const path = require('path')
+
+const Register = async function(req, res) {
+
+    const developer = new Developer(req.body);
+
+    try {
+        await developer.save();
+        const token = await developer.generateAuthToken();
+        res.cookie('access_token', token)
+        res.send({ developer, redirect: '/developer/home' })
+    } catch (e) {
+        res.status(400).send(e);
+    }
+}
+
+const Login = async function(req, res) {
+    try {
+        const developer = await Developer.findByCredentials(req.body.email, req.body.password);
+        const token = await developer.generateAuthToken();
+        res.cookie('access_token', token)
+        res.send({ developer, redirect: '/developer/home' })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+}
+
+const showHomePage = async function(req, res) {
+    try {
+        const developer = req.developer
+        res.render('UserHome', {
+            developer
+        })
+
+    } catch (e) {
+
+        res.status(500).send();
+    }
+}
+
+const Profile = async function(req, res) {
+    const developer = req.developer
+    res.render('UserProfile', {
+        developer,
+    })
+}
+
+const Logout = async function(req, res) {
+    try {
+        req.developer.tokens = req.developer.tokens.filter((token) => {
+            return token.token !== req.token
+        })
+        await req.developer.save();
+
+        res.render('login');
+    } catch (e) {
+        res.status(500).render('login')
+    }
+}
+
+const UpdateProfile = async function(req, res) {
+    const updates = Object.keys(req.body);
+    const updatesAllowed = ['name', 'age', 'email', 'password'];
+    const isValidOperation = updates.every((update) => updatesAllowed.includes(update));
+
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid Update!' })
+    }
+
+    try {
+        updates.forEach((update) => req.developer[update] = req.body[update])
+        await req.developer.save();
+        const developer = req.developer
+        res.send({ redirect: '/developer/profile', developer });
+    } catch (e) {
+        res.status(400).send(e)
+    }
+}
+
+const DeleteProfile = async function(req, res) {
+    try {
+        const currentUserID = req.developer._id.toString();
+
+        await Developer.updateMany({ _id: { $in: req.developer.followingList } }, {
+
+            $unset: {
+                [`follower.${currentUserID}`]: ""
+            }
+        });
+
+        await Developer.updateMany({ _id: { $in: req.developer.followerList } }, {
+            $unset: {
+                [`following.${currentUserID}`]: ""
+            }
+        });
+        await req.developer.remove()
+        res.send(req.developer);
+    } catch (e) {
+        res.status(500).send(e)
+    }
+}
+
+
+
+var storage = multer.diskStorage({
+    destination: './public/images/',
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
+    }
+})
+
+const Upload = multer({ storage: storage })
+
+const UploadDocument = async function(req, res) {
+    //if want to restrict the size and dimentions uncomment below line and replace  uploadDocument.fileUpload = file with uploadDocument.fileUpload = buffer
+    //const buffer = await sharp(req.file).resize({ width: 250, height: 250 }).png()
+    const file = req.file
+    try {
+        const chatRoom = await ClassRoom.findOne({ name: req.body.name })
+        const students = Object.keys(chatRoom.students);
+        var flag = 0
+
+        if (students.length > 0) {
+            students.forEach(element => {
+                if (element != req.developer._id) {
+                    throw new Error("Developer does not belong to class")
+                } else {
+                    flag = 1
+                }
+            });
+        } else {
+            throw new Error("Developer does not belong to class")
+        }
+        if (flag == 1) {
+            const uploadDocument = new UploadDocuments({
+                developerId: req.developer._id,
+                chatRoomId: chatRoom._id,
+                name: req.body.name,
+                description: req.body.description
+            })
+            uploadDocument.fileUpload = file
+            await uploadDocument.save()
+            await uploadDocument.populate('managerId', 'name email age').populate('developerId', 'name email age').execPopulate()
+            res.send(uploadDocument);
+        }
+
+    } catch (e) {
+        if (e) {
+            res.status(500).send(e);
+        } else {
+            res.status(500).send("Class not found");
+        }
+
+    }
+}
+
+const getDocument = async function(req, res) {
+    try {
+        var chatRoom = []
+        chatRoom = await Document.find({ developerId: req.developer._id })
+        res.send(chatRoom)
+    } catch (e) {
+        res.status(500).send("somthing went wrong while getting document");
+    }
+}
+
+// const deleteAvatar = async function(req, res) {
+//     try {
+//         req.developer.avatar = undefined;
+//         await req.developer.save()
+//         res.send('success');
+//     } catch (e) {
+//         res.status(500).send()
+//     }
+// }
+
+// const getAvatar = async function(req, res) {
+//     try {
+//         const developer = await Developer.findById(req.body.id)
+
+//         if (!developer || !developer.avatar) {
+//             throw new Error("something is wrong")
+//         }
+
+//         res.set('Content-Type', 'image/png')
+//         res.send(developer.avatar)
+//     } catch (e) {
+//         res.status(500).send();
+//     }
+// }
+
+const classRoomFollow = async function(req, res) {
+    const userProfile = req.developer
+    const userId = req.developer._id
+    const chatRoomId = req.body.id
+    try {
+        const chatRoom = await ClassRoom.findOne({ _id: chatRoomId })
+        if (chatRoomId in userProfile.following) {
+
+            delete userProfile.following[chatRoomId]
+            delete chatRoom.students[userId]
+
+            userProfile.chatRoomCount = userProfile.chatRoomCount - 1
+            chatRoom.studentCount = chatRoom.studentCount - 1
+
+            userProfile.markModified('following')
+            userProfile.markModified('chatRoomCount')
+            chatRoom.markModified('students')
+            chatRoom.markModified('studentCount')
+            await chatRoom.save()
+            await userProfile.save()
+            return res.status(201).send(userProfile)
+        }
+        chatRoom.students[userId] = userId
+        userProfile.following[chatRoomId] = chatRoomId
+        userProfile.chatRoomCount = userProfile.chatRoomCount + 1
+        chatRoom.studentCount = chatRoom.studentCount + 1
+        userProfile.markModified('following')
+        userProfile.markModified('chatRoomCount')
+        chatRoom.markModified('students')
+        chatRoom.markModified('studentCount')
+        await chatRoom.save()
+        await userProfile.save()
+        res.send(userProfile)
+
+    } catch (e) {
+        res.status(500).send("somthing went wrong");
+    }
+}
+
+const searchClassRoom = async function(req, res) {
+    try {
+
+        const chatRoom = await ClassRoom.findOne({ name: req.body.name })
+
+        if (!chatRoom) {
+            return alert('Class room not found')
+        }
+
+        res.send(chatRoom)
+    } catch (e) {
+        res.status(500).send("somthing went wrong")
+    }
+}
+
+const loadSearch = async function(req, res) {
+    try {
+        const developer = req.developer
+
+        res.render('UserSearch', { developer })
+    } catch (e) {
+        res.status(500).send("somthing went wrong while loading page")
+    }
+}
+
+const loadClassDetails = async function(req, res) {
+    try {
+        const developer = req.developer
+
+        res.render('UserClassDetails', { developer })
+    } catch (e) {
+        res.status(500).send("somthing went wrong while loading page")
+    }
+}
+const loadClassRoom = async function(req, res) {
+        try {
+
+            const chatRoom = await ClassRoom.findOne({ name: req.body.name }).populate('owner', 'name email age')
+                //chatRoom.populate('owner', 'name email age').execPopulate()
+
+            if (!chatRoom) {
+                return alert('Class room not found')
+            }
+
+            res.send(chatRoom)
+        } catch (e) {
+            res.status(500).send("somthing went wrong")
+        }
+    }
+    // const Followers = async function(req, res) {
+    //     try {
+    //         const developer = req.developer
+    //         res.render('followers', {
+    //             developer
+    //         })
+    //     } catch (e) {
+    //         res.status(500).send("somthing went wrong")
+    //     }
+    // }
+
+// const Following = async function(req, res) {
+//     try {
+//         const developer = req.developer
+//         res.render('following', {
+//             developer
+//         })
+//     } catch (e) {
+//         res.status(500).send("somthing went wrong")
+//     }
+// }
+
+// const Searchuser = async function(req, res) {
+//     try {
+//         const developer = req.developer
+//         res.render('search', {
+//             developer
+//         })
+//     } catch (e) {
+//         res.status(500).send("somthing went wrong")
+//     }
+// }
+
+// const getData = async function(req, res) {
+//     try {
+//         const developer = req.developer
+//         res.send(developer)
+//     } catch (e) {
+//         res.status(500).send("somthing went wrong")
+//     }
+// }
+
+
+const loadHome = async function(req, res) {
+    var following = Object.keys(req.developer.following)
+
+    const documents = await Document.find({ $or: [{ $and: [{ chatRoomId: { $in: following } }, { managerId: { $exists: true } }] }, { $and: [{ chatRoomId: { $in: following } }, { developerId: { $nin: req.developer._id } }] }] }).populate('managerId', 'name email age').populate('developerId', 'name email age')
+
+    documents.forEach(element => {
+        if (element.managerId) {
+            element.populate('managerId', 'name email age').execPopulate()
+        } else {
+            element.populate('developerId', 'name email age').execPopulate()
+        }
+    });
+    //console.log(documents);
+    res.send(documents)
+        // $and: [{ chatRoomId: { $in: following } }, { managerId: { $exists: true } }]
+        // $and: [{ chatRoomId: { $in: following } }, { developerId: { $nin: req.developer._id } }]
+        // $or: [ { $and: [{ chatRoomId: { $in: following } }, { managerId: { $exists: true } }] }, { $and: [{ chatRoomId: { $in: following } }, { developerId: { $nin: req.developer._id } }] } ]
+        //const userFollowers = await Developer.find({ _id: { $in: followers } }, 'firstName lastName twitterHandle')
+}
+
+
+
+
+
+
+
+module.exports = {
+    Register: Register,
+    Login: Login,
+    Profile: Profile,
+    Logout: Logout,
+    searchClassRoom,
+    UpdateProfile: UpdateProfile,
+    DeleteProfile: DeleteProfile,
+    //uploadAvatar: uploadAvatar,
+    Upload,
+    UploadDocument,
+    loadSearch,
+    getDocument,
+    loadClassDetails,
+    loadClassRoom,
+    //deleteAvatar: deleteAvatar,
+    //getAvatar: getAvatar,
+    //userFollow: userFollow,
+    showHomePage,
+    classRoomFollow,
+    loadHome,
+    //showFollower,
+    //Followers,
+    //Following,
+    //Searchuser,
+    //getData
+}

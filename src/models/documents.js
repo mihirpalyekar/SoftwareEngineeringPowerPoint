@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
 const documentSchema = new mongoose.Schema({
-    studentId: {
+    developerId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Developer'
     },
-    teacherId: {
+    managerId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Teacher'
+        ref: 'Manager'
     },
-    classRoomId: {
+    chatRoomId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ClassRoom'
     },

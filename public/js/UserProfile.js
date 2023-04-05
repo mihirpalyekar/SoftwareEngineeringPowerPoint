@@ -1,7 +1,7 @@
 $(document).ready((e) => {
     $.ajax({
         type: 'GET',
-        url: '/user/profile',
+        url: '/developer/profile',
         success: function(data) {
 
         },
@@ -23,7 +23,7 @@ $(document).ready((e) => {
         });
         $.ajax({
             type: 'PATCH',
-            url: '/user/profile/update',
+            url: '/developer/profile/update',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -33,7 +33,7 @@ $(document).ready((e) => {
                 window.location.href = data.redirect;
             },
             error: function() {
-                alert('Error while updating user')
+                alert('Error while updating developer')
 
             }
         })
@@ -41,7 +41,7 @@ $(document).ready((e) => {
 
     $.ajax({
         type: 'GET',
-        url: '/user/classRoom/getDocument',
+        url: '/developer/chatRoom/getDocument',
         success: function(data) {
             data.forEach(element => {
                 $('#toappend').append(`

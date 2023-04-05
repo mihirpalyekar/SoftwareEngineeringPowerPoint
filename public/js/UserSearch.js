@@ -26,7 +26,7 @@ $(document).ready(() => {
                     });
                     if (flag == 1) {
                         $('#append').append(`<div class="row border-top b" >
-                                  <img class="user" src="/img/apple-icon-114x114.png" alt="">
+                                  <img class="developer" src="/img/apple-icon-114x114.png" alt="">
                                   <span class="username">${data.name}</span>
                                   <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${data._id}"  >Unfollow
                                   </button>
@@ -38,7 +38,7 @@ $(document).ready(() => {
                               </div>`)
                     } else {
                         $('#append').append(`<div class="row border-top b" >
-                                  <img class="user" src="/img/apple-icon-114x114.png" alt="">
+                                  <img class="developer" src="/img/apple-icon-114x114.png" alt="">
                                   <span class="username">${data.name}</span>
                                   <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${data._id}" >Follow
                                   </button>
@@ -51,7 +51,7 @@ $(document).ready(() => {
                     }
                 } else {
                     $('#append').append(`<div class="row border-top b" >
-                                  <img class="user" src="/img/apple-icon-114x114.png" alt="">
+                                  <img class="developer" src="/img/apple-icon-114x114.png" alt="">
                                   <span class="username">${data.name}</span>
                                   <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${data._id}" >Follow
                                   </button>
@@ -80,7 +80,7 @@ $(document).ready(() => {
 
         $.ajax({
             type: 'POST',
-            url: '/user/follow',
+            url: '/developer/follow',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -104,7 +104,7 @@ $(document).ready(() => {
                 }
             },
             error: function() {
-                alert('Error while login user')
+                alert('Error while login developer')
 
             }
         })

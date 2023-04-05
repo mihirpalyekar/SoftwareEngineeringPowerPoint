@@ -16,7 +16,7 @@ $(document).ready(() => {
         reqObj.append('fileUpload', data.fileUpload);
         $.ajax({
             type: 'POST',
-            url: '/user/classRoom/uploadDocument',
+            url: '/developer/chatRoom/uploadDocument',
             data: reqObj,
             processData: false,
             contentType: false,
@@ -36,12 +36,12 @@ $(document).ready(() => {
 socket.on("sending data", (data) => {
     $.ajax({
         type: 'GET',
-        url: '/user/loadHome',
+        url: '/developer/loadHome',
         success: function(data) {
             $('.append-info').remove()
             data.forEach(element => {
 
-                if (element.studentId) {
+                if (element.developerId) {
                     $('#toAppend').prepend(`
               <div class="append-info">
               <div class="info-image">
@@ -52,7 +52,7 @@ socket.on("sending data", (data) => {
               <div class="data-description"> <b>Description for the document</b> : <br>${element.description}
               
               </div>
-              <div class="data-name"> <b>Uploaded by</b> :${element.studentId.name} </div>
+              <div class="data-name"> <b>Uploaded by</b> :${element.developerId.name} </div>
               </div>
               </div>
           <div class="border-bottom"></div>`);
@@ -66,7 +66,7 @@ socket.on("sending data", (data) => {
               <div class="data-name">Class Room name : ${element.name}</div>
               <div class="data-description"> <b>Description for the document</b> : <br>${element.description}
               </div>
-              <div class="data-name"> <b>Uploaded by</b> :${element.teacherId.name} </div>
+              <div class="data-name"> <b>Uploaded by</b> :${element.managerId.name} </div>
               </div>
               </div>
           <div class="border-bottom"></div>`);
