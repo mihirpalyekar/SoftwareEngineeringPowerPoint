@@ -16,7 +16,7 @@
 
 <body>
 
-    <div class="container">
+    {{!-- <div class="container">
         <div class="row">
             <div class="col-sm-3 ">{{>sidebarUser}}</div>
 
@@ -30,7 +30,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title">All the assignments</h5>
                         </div>
-                        {{!-- <form id="topTweetCreate">
+                        <form id="topTweetCreate">
                             <div class="form-group">
                                 <textarea class="form-control" id="exampleFormControlTextarea11" rows="3"
                                     placeholder="What's happening?" required='true'></textarea>
@@ -38,16 +38,71 @@
                             </div>
                             <button type="submit" form="topTweetCreate" class="btn btn-primary"
                                 id="creatTweet">Tweet</button>
-                        </form> --}}
+                        </form> 
                     </div>
 
-                    {{!-- --------------Tweet content------------------- --}}
+               
 
                     <div class="w-100 " id="toAppend"></div>
 
-                    {{!-- --------------Tweet content------------------- --}}
+          
                 </div>
             </div>
+        </div>
+    </div>--}} 
+
+    <div class="pageContainer">
+        <div class="sidebarContainer">
+            <div class="logoDiv">
+                <li class="top-icon">
+                        <img class="topLogo" src="/img/Webp.net-resizeimage.png" alt="">
+                </li>
+                <span class="logoname">ProgressPoint</span>
+            </div>
+           {{>sidebarUser}}
+        </div>
+        <div class="mainContainer">
+            <div class="headerDiv"><h3>Welcome {{developer.name}}</h3></div>
+             <div class="share">
+            <div class="shareWrapper">
+            <span class="shareText"> Share an Update ?</span>
+             <form id="modalCreateUpload" name="modalCreateUpload" enctype="multipart/form-data">
+              <div class="shareTop">
+            <input
+              placeholder="Seach team name"
+              class="shareInput form-control"
+              type="text" id="side-tweet-name" name="name" id="exampleFormControlTextarea1" rows="1" required='true'
+            ></input>
+          </div>
+          <hr class="shareHr" />
+          <div class="shareTop">
+            <input
+                type="text" id="side-tweet-desciption" name="description"
+              placeholder="Type something ..."
+              class="shareInput form-control"
+              id="exampleFormControlTextarea1" rows="3"
+            ></input>
+          </div>
+          <hr class="shareHr" />
+            <div class="form-group shareTop">
+                <div class="buttonsContainer">
+                     <div class="fileattach">
+                    <label for="side-tweet-file" class="custom-file-upload">Attach File</label>
+                    <input type="file" id="side-tweet-file" name="fileUpload" class="form-control shareInput" id="exampleFormControlTextarea1" rows="1" required='true' style="display: none;"></input>
+                </div>
+                <div class="shareButtonDiv"><button id="side-tweet" type="submit" class="shareButton">Share</button></div>  
+                </div>  
+            </div>
+             
+             </form>
+         
+          <div class="shareBottom"> 
+            
+            </div>
+            
+          </div>
+        </div>
+      </div>
         </div>
     </div>
 
