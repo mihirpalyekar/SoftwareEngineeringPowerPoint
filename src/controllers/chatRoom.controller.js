@@ -35,6 +35,18 @@ const readAllChatRoom = async function(req, res) {
     }
 }
 
+const getAllFollowedChatRoom = async (req,res) => {
+    var allClass = [];
+    try {
+
+        allClass = await ChatRoom.find({ developer : req.manager._id })
+        
+        res.send(allClass)
+    } catch (e) {
+        res.status(500).send(e)
+    }
+}
+
 
 
 const readChatRoomById = async function(req, res) {

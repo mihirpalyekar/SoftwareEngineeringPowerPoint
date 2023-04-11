@@ -23,10 +23,10 @@ $(document).ready(() => {
             data: JSON.stringify(data),
             dataType: "json",
             success: function(data) {
-                alert('Class room created Succesfully')
+                alert('Chat room created Succesfully')
             },
             error: function(e) {
-                alert('Class room name already taken')
+                alert('Chat room name already taken')
                 console.log(e);
             }
         })
@@ -42,14 +42,14 @@ $(document).ready(() => {
                     $('#toAppend').prepend(`
             <div class="append-info">
             <div class="info-image">
-            <img src="http://localhost:3000/images/${element.fileUpload.filename}"  width="200" height="200" >
+            <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200" >
             </div>
             <div class ="info-data">
-            <div class="data-name">Class Room name : ${element.name}</div>
-            <div class="data-description"> <b>Description for the document</b> : <br>${element.description}
+            <div class="data-name">Chat Room name : ${element?.name}</div>
+            <div class="data-description"> <b>Description for the document</b> : <br>${element?.description}
             
             </div>
-            <div class="data-name"> <b>Uploaded by</b> :${element.developerId.name} </div>
+            <div class="data-name"> <b>Uploaded by</b> :${element?.developerId?.name} </div>
             </div>
             </div>
         <div class="border-bottom"></div>`);
@@ -57,13 +57,13 @@ $(document).ready(() => {
                     $('#toAppend').prepend(`
             <div class="append-info">
             <div class="info-image">
-            <img src="http://localhost:3000/images/${element.fileUpload.filename}"  width="200" height="200"  >
+            <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200"  >
             </div>
             <div class ="info-data">
-            <div class="data-name">Class Room name : ${element.name}</div>
-            <div class="data-description"> <b>Description for the document</b> : <br>${element.description}
+            <div class="data-name">Chat Room name : ${element?.name}</div>
+            <div class="data-description"> <b>Description for the document</b> : <br>${element?.description}
             </div>
-            <div class="data-name"> <b>Uploaded by</b> :${element.managerId.name} </div>
+            <div class="data-name"> <b>Uploaded by</b> :${element?.managerId.name} </div>
             </div>
             </div>
         <div class="border-bottom"></div>`);

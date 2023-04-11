@@ -124,11 +124,11 @@ const UploadDocument = async function(req, res) {
     const file = req.file
     try {
         const chatRoom = await ClassRoom.findOne({ name: req.body.name })
-        const students = Object.keys(chatRoom.students);
+        const developer = Object.keys(chatRoom.developer);
         var flag = 0
 
-        if (students.length > 0) {
-            students.forEach(element => {
+        if (developer.length > 0) {
+            developer.forEach(element => {
                 if (element != req.developer._id) {
                     throw new Error("Developer does not belong to class")
                 } else {
@@ -155,7 +155,7 @@ const UploadDocument = async function(req, res) {
         if (e) {
             res.status(500).send(e);
         } else {
-            res.status(500).send("Class not found");
+            res.status(500).send("Chat not found");
         }
 
     }
@@ -205,27 +205,27 @@ const classRoomFollow = async function(req, res) {
         if (chatRoomId in userProfile.following) {
 
             delete userProfile.following[chatRoomId]
-            delete chatRoom.students[userId]
+            delete chatRoom.developer[userId]
 
             userProfile.chatRoomCount = userProfile.chatRoomCount - 1
-            chatRoom.studentCount = chatRoom.studentCount - 1
+            chatRoom.developerCount = chatRoom.developerCount - 1
 
             userProfile.markModified('following')
             userProfile.markModified('chatRoomCount')
-            chatRoom.markModified('students')
-            chatRoom.markModified('studentCount')
+            chatRoom.markModified('developer')
+            chatRoom.markModified('developerCount')
             await chatRoom.save()
             await userProfile.save()
             return res.status(201).send(userProfile)
         }
-        chatRoom.students[userId] = userId
+        chatRoom.developer[userId] = userId
         userProfile.following[chatRoomId] = chatRoomId
         userProfile.chatRoomCount = userProfile.chatRoomCount + 1
-        chatRoom.studentCount = chatRoom.studentCount + 1
+        chatRoom.developerCount = chatRoom.developerCount + 1
         userProfile.markModified('following')
         userProfile.markModified('chatRoomCount')
-        chatRoom.markModified('students')
-        chatRoom.markModified('studentCount')
+        chatRoom.markModified('developer')
+        chatRoom.markModified('developerCount')
         await chatRoom.save()
         await userProfile.save()
         res.send(userProfile)
@@ -241,7 +241,7 @@ const searchClassRoom = async function(req, res) {
         const chatRoom = await ClassRoom.findOne({ name: req.body.name })
 
         if (!chatRoom) {
-            return alert('Class room not found')
+            return alert('Chat room not found')
         }
 
         res.send(chatRoom)
@@ -276,7 +276,7 @@ const loadClassRoom = async function(req, res) {
                 //chatRoom.populate('owner', 'name email age').execPopulate()
 
             if (!chatRoom) {
-                return alert('Class room not found')
+                return alert('Chat room not found')
             }
 
             res.send(chatRoom)
@@ -354,8 +354,9 @@ const loadHome = async function(req, res) {
 
 
 module.exports = {
-    Register: Register,
-    Login: Login,
+    Register,
+    Login,
+    showHomePage,
     Profile: Profile,
     Logout: Logout,
     searchClassRoom,
@@ -371,7 +372,6 @@ module.exports = {
     //deleteAvatar: deleteAvatar,
     //getAvatar: getAvatar,
     //userFollow: userFollow,
-    showHomePage,
     classRoomFollow,
     loadHome,
     //showFollower,

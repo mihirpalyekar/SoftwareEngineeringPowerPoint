@@ -39,7 +39,7 @@ $(document).ready(() => {
                     </div>
                   <div class = " classroom-details">
                     <div class = " classroom-details-studentsCount">
-                    <h5><b>Students Count :</b> ${element.studentCount}</h5>
+                    <h5><b>Students Count :</b> ${element.developerCount}</h5>
                     </div>
                     <div class = " classroom-details-ceatedat">
                     <h5><b>Created at :</b> ${element.createdAt}</h5>

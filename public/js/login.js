@@ -88,9 +88,9 @@ $('#register-submit').click((e) => {
             success: function(data) {
                 window.location.href = data.redirect;
             },
-            error: function() {
+            error: function(e) {
+                console.log(e)
                 alert('Error while creating developer')
-
             }
         })
     }

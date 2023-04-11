@@ -2,7 +2,7 @@ const express = require('express');
 require('./src/db/mongoose')
 const userRouter = require('./src/routers/developer')
 const teacherRouter = require('./src/routers/manager')
-const classRoomRouter = require('./src/routers/chatRoom')
+const chatRoomRouter = require('./src/routers/chatRoom')
     //const taskRouter = require('./src/routers/task')
 const path = require('path')
 const hbs = require('hbs')
@@ -52,7 +52,7 @@ app.use(express.json());
 app.use(cookieParser())
 app.use(userRouter);
 app.use(teacherRouter)
-app.use(classRoomRouter)
+app.use(chatRoomRouter)
 app.use(fileUpload({
     createParentPath: true
 }));

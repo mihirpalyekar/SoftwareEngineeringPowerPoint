@@ -5,7 +5,7 @@ const Manager = require('../models/manager')
 const developerAuth = async(req, res, next) => {
     try {
         const token = req.cookies.access_token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, 'thisismynewtoken');
         const developer = await Developer.findOne({ _id: decoded._id, 'tokens.token': token });
         if (!developer) {
             throw new Error()
@@ -21,7 +21,7 @@ const managerAuth = async(req, res, next) => {
     try {
 
         const token = req.cookies.access_token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, 'thisismynewtoken');
         const manager = await Manager.findOne({ _id: decoded._id, 'tokens.token': token });
         if (!manager) {
             throw new Error()

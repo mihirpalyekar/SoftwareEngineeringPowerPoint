@@ -97,7 +97,7 @@ const uploadDocument = async function(req, res) {
         if (e) {
             res.status(500).send(e);
         } else {
-            res.status(500).send("Class not found");
+            res.status(500).send("Chat not found");
         }
 
     }
@@ -127,7 +127,7 @@ const searchClassRoom = async function(req, res) {
     try {
         const chatRoom = await ClassRoom.findOne({ name: req.body.name }).populate('owner', 'name email age')
         if (!chatRoom) {
-            return alert('Class room not found')
+            return alert('Chat room not found')
         }
         res.send(chatRoom)
     } catch (e) {
@@ -165,9 +165,9 @@ const Profile = async function(req, res) {
 
 
 const loadHome = async function(req, res) {
-    var classRooms = Object.keys(req.manager.classRooms)
+    var chatRooms = Object.keys(req.manager.chatRooms)
 
-    const documents = await Documents.find({ chatRoomId: { $in: classRooms } }).populate('managerId', 'name email age').populate('developerId', 'name email age')
+    const documents = await Documents.find({ chatRoomId: { $in: chatRooms } }).populate('managerId', 'name email age').populate('developerId', 'name email age')
     res.send(documents)
 }
 

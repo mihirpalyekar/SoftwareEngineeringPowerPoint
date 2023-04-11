@@ -14,6 +14,7 @@ $(document).ready(() => {
         reqObj.append('name', data.name);
         reqObj.append('description', data.description);
         reqObj.append('fileUpload', data.fileUpload);
+        console.log(reqObj)
         $.ajax({
             type: 'POST',
             url: '/developer/chatRoom/uploadDocument',
@@ -45,14 +46,14 @@ socket.on("sending data", (data) => {
                     $('#toAppend').prepend(`
               <div class="append-info">
               <div class="info-image">
-              <img src="http://localhost:3000/images/${element.fileUpload.filename}"  width="200" height="200" >
+              <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200" >
               </div>
               <div class ="info-data">
-              <div class="data-name">Class Room name : ${element.name}</div>
+              <div class="data-name">Chat Room name : ${element?.name}</div>
               <div class="data-description"> <b>Description for the document</b> : <br>${element.description}
               
               </div>
-              <div class="data-name"> <b>Uploaded by</b> :${element.developerId.name} </div>
+              <div class="data-name"> <b>Uploaded by</b> :${element?.developerId.name} </div>
               </div>
               </div>
           <div class="border-bottom"></div>`);
@@ -60,13 +61,13 @@ socket.on("sending data", (data) => {
                     $('#toAppend').prepend(`
               <div class="append-info">
               <div class="info-image">
-              <img src="http://localhost:3000/images/${element.fileUpload.filename}"  width="200" height="200"  >
+              <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200"  >
               </div>
               <div class ="info-data">
-              <div class="data-name">Class Room name : ${element.name}</div>
-              <div class="data-description"> <b>Description for the document</b> : <br>${element.description}
+              <div class="data-name">Chat Room name : ${element?.name}</div>
+              <div class="data-description"> <b>Description for the document</b> : <br>${element?.description}
               </div>
-              <div class="data-name"> <b>Uploaded by</b> :${element.managerId.name} </div>
+              <div class="data-name"> <b>Uploaded by</b> :${element?.managerId.name} </div>
               </div>
               </div>
           <div class="border-bottom"></div>`);
