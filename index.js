@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("", (req, res) => {
-  res.render("teacherSearch");
+  res.render("login");
 });
 // app.get("/Userhome", (req, res) => {
 //     res.render('UserHome')
