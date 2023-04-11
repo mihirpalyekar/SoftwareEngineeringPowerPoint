@@ -1,12 +1,12 @@
 $(document).ready(() => {
-    $.ajax({
-        type: 'GET',
-        url: '/developer/loadHome',
-        success: function(data) {
-            data.forEach(element => {
-
-                if (element.developerId) {
-                    $('#toAppend').prepend(`
+  $.ajax({
+    type: "GET",
+    url: "/developer/loadHome",
+    success: function (data) {
+      console.log(data);
+      data.forEach((element) => {
+        if (element.developerId) {
+          $("#toAppend").prepend(`
               <div class="append-info">
               <div class="info-image">
               <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200" >
@@ -20,8 +20,8 @@ $(document).ready(() => {
               </div>
               </div>
           <div class="border-bottom"></div>`);
-                } else {
-                    $('#toAppend').prepend(`
+        } else {
+          $("#toAppend").prepend(`
               <div class="append-info">
               <div class="info-image">
               <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200"  >
@@ -34,12 +34,11 @@ $(document).ready(() => {
               </div>
               </div>
           <div class="border-bottom"></div>`);
-
-                }
-            });
-        },
-        error: function() {
-            alert('Error while loading profile')
         }
-    })
-})
+      });
+    },
+    error: function () {
+      alert("Error while loading profile");
+    },
+  });
+});

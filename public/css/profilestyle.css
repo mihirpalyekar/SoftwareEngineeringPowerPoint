@@ -201,6 +201,7 @@ h6 {
   flex: 1;
   background-color: lightgray;
   align-items: center;
+  overflow: scroll;
 }
 
 .headerDiv {
