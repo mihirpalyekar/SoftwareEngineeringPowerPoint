@@ -18,31 +18,33 @@
 
 <body>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3 ">{{>sidebarUser}}</div>
-
-            <div class="col-sm-9 border-right border-left">
-                <div class="row ">
+    <div class="pageContainer">
+        <div class="sidebarContainer">
+            <div class="logoDiv">
+                <li class="top-icon">
+                        <img class="topLogo" src="/img/Webp.net-resizeimage.png" alt="">
+                </li>
+                <span class="logoname">ProgressPoint</span>
+            </div>
+           {{>sidebarUser}}
+        </div>
+            <div class="mainContainer">
+                <div class="headerDiv">
                     <h3>Search here!</h3>
                 </div>
-                <div class="input-group mb-3">
+                <div class="searchInput">
                     <input type="text" id="ClassName" class="form-control" placeholder="search class name"
                         aria-label="Recipient's username" aria-describedby="button-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" data-userid = "{{developer._id}}" id="button-addon2"><i
+                        <button class="searchIcon" type="button" data-userid = "{{developer._id}}" id="button-addon2"><i
                                 class="fa fa-search click"></i></button>
                     </div>
                 </div>
 
                 {{!-- ----profile---- --}}
-                <div id="append">
-                    
-                </div>
-                {{!-- ----profile---- --}}
-
-
+                <div id="append"></div>
             </div>
+    </div>
 
             <!-- Optional JavaScript -->
             <!-- jQuery first, then Popper.js, then Bootstrap JS -->

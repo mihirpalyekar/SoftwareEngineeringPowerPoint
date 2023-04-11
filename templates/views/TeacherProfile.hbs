@@ -17,16 +17,49 @@
 
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3 ">{{>sidebarTeacher}}</div>
+    <div class="pageContainer">
+        <div class="sidebarContainer">
+             <div class="logoDiv">
+                <li class="top-icon">
+                        <img class="topLogo" src="/img/Webp.net-resizeimage.png" alt="">
+                </li>
+                <span class="logoname">ProgressPoint</span>
+            </div>
+           {{>sidebarTeacher}}
+        </div>
 
-            <div class="col-sm-9 border-right border-left">
-                <div class="row border-bottom ">
+            <div class="mainContainer">
+                <div class="headerDiv">
                     <h3>My Profile</h3>
                 </div>
 
-            <div class="row">
+                <div class="developerProfile">
+                    <div class="profileWrapper">
+                        <div class="developerImgDetails">
+
+                            <img class="developer" src="/img/apple-icon-114x114.png" alt="">
+
+                            <div class="details">
+                                <span class="username">{{developer.name}}</span>
+                                <span class="emailID">{{developer.email}}</span>
+                                 <div class="follow" >Class Rooms followed : {{developer.chatRoomFollowedCount}} </div>
+                                <div class="follow" >Class Rooms created : {{developer.chatRoomCreatedCount}} </div>
+                            </div>
+                    
+                        </div>
+                
+                        <button type="button" class="editButton" data-toggle="modal"
+                            data-target="#editModal">Edit Profile
+                        </button>
+
+                    </div>
+    
+                </div>
+                <div class="allPosts">
+                    <h4 class= "alignment">All Updates</h4> 
+                </div>
+
+            {{!-- <div class="row">
                 <img class="developer" src="/img/apple-icon-114x114.png" alt="">
                 <span class="username">{{developer.name}}</span>
                 <button type="button" class="edit" class="btn btn-primary" data-toggle="modal"
@@ -41,7 +74,7 @@
              <div class="border-bottom"></div>
             <div class="row border-bottom document-title">
                 <h2 class= " alignment">All Uploaded documents</h2> 
-            </div>
+            </div> --}}
                 {{!-- ----------Tweets content-------- --}}
                 <div class="border-bottom" id="toappend"></div>
                 
@@ -92,7 +125,7 @@
                     </div>
                 </div>
 
-            </div>
+    </div>
             <!-- Optional JavaScript -->
             <!-- jQuery first, then Popper.js, then Bootstrap JS -->
             <script src="/socket.io/socket.io.js"></script>

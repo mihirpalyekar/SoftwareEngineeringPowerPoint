@@ -18,38 +18,62 @@ const socketio = require('socket.io')
 const app = express();
 const port = process.env.PORT || 3000;
 
-const publicDirectoryPath = path.join(__dirname, './public')
-const viewsPath = path.join(__dirname, './templates/views')
-const partialsPath = path.join(__dirname, './templates/partials')
+const publicDirectoryPath = path.join(__dirname, "./public");
+const viewsPath = path.join(__dirname, "./templates/views");
+const partialsPath = path.join(__dirname, "./templates/partials");
 
+app.set("view engine", "hbs");
+app.set("views", viewsPath);
+app.use(express.static(publicDirectoryPath));
+hbs.registerPartials(partialsPath);
 
-app.set('view engine', 'hbs')
-app.set('views', viewsPath)
-app.use(express.static(publicDirectoryPath))
-hbs.registerPartials(partialsPath)
+app.use(function (req, res, next) {
+  res.set(
+    "Cache-Control",
+    "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0"
+  );
 
-app.use(function(req, res, next) {
-    res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-
-    next();
+  next();
 });
 
-const server = http.createServer(app)
-const io = socketio(server)
+const server = http.createServer(app);
+const io = socketio(server);
 
-io.on('connection', (socket) => {
-    console.log("Connection  established");
-    socket.on('Uploaded', (data) => {
-        console.log(data);
-        socket.broadcast.emit("sending data", data)
-    })
-})
+io.on("connection", (socket) => {
+  console.log("Connection  established");
+  socket.on("Uploaded", (data) => {
+    console.log(data);
+    socket.broadcast.emit("sending data", data);
+  });
+});
 
 app.get("", (req, res) => {
-        res.render('login')
-    })
+  res.render("login");
+});
+// app.get("/Userhome", (req, res) => {
+//     res.render('UserHome')
+// })
+// app.get("/Teacherhome", (req, res) => {
+//         res.render('TeacherHome')
+//})
+// app.get("/searchUser", (req, res) => {
+//     res.render('UserSearch')
+// })
+// app.get("/searchTeacher", (req, res) => {
+//     res.render('TeacherSearch')
+// })
+// app.get("/TeacherFollowing", (req, res) => {
+//         res.render('TeacherFollowing')
+//})
+// app.get("/teacher/profile", (req, res) => {
+//         res.render('TeacherProfile')
+//     })
+// app.get("/user/profile", (req, res) => {
+//     res.render('UserProfile')
+// })
+
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(userRouter);
 app.use(teacherRouter)
 app.use(chatRoomRouter)
@@ -59,10 +83,8 @@ app.use(fileUpload({
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('dev'));
-
-
+app.use(morgan("dev"));
 
 server.listen(port, () => {
-    console.log(`server is running on port ${port}`);
+  console.log(`server is running on port ${port}`);
 });
