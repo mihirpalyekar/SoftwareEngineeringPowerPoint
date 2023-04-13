@@ -1,14 +1,14 @@
 .post {
   width: 75%;
+}
+
+.postWrapper {
+  padding: 1.5rem;
   border-radius: 10px;
   -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
   box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
   margin: 0 0 30px 0;
   background-color: rgb(250, 250, 250);
-}
-
-.postWrapper {
-  padding: 1.5rem;
 }
 
 .postTop {
@@ -35,7 +35,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .postChatroom {
@@ -64,6 +64,7 @@
   /* margin-top: 20px; */
   /* width: 100%; */
   max-height: 250px;
+  max-width: 350px;
   object-fit: contain;
 }
 
