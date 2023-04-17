@@ -1,49 +1,50 @@
-const socket = io()
+const socket = io();
 $(document).ready(() => {
-    $('#side-tweet').click((e) => {
-        e.preventDefault()
-        var data = {}
-        $('#modalCreateUpload').serializeArray().forEach((element) => {
-            if (element.value) {
-                data[element.name] = element.value;
-            }
-        });
-        var img = $('#side-tweet-file');
-        data.fileUpload = img[0].files[0]
-        var reqObj = new FormData();
-        reqObj.append('name', data.name);
-        reqObj.append('description', data.description);
-        reqObj.append('fileUpload', data.fileUpload);
-        console.log(reqObj)
-        $.ajax({
-            type: 'POST',
-            url: '/developer/chatRoom/uploadDocument',
-            data: reqObj,
-            processData: false,
-            contentType: false,
-            success: function(data) {
-                socket.emit('Uploaded', data)
-                alert('File uploaded Succesfully')
-            },
-            error: function(e) {
-                console.log(e);
-                alert('somthing went wrong while uploding document')
-            }
-        })
-    })
-})
-
+  $("#side-tweet").click((e) => {
+    console.log("button clicked");
+    e.preventDefault();
+    var data = {};
+    $("#modalCreateUpload")
+      .serializeArray()
+      .forEach((element) => {
+        if (element.value) {
+          data[element.name] = element.value;
+        }
+      });
+    var img = $("#side-tweet-file");
+    data.fileUpload = img[0].files[0];
+    var reqObj = new FormData();
+    reqObj.append("name", data.name);
+    reqObj.append("description", data.description);
+    reqObj.append("fileUpload", data.fileUpload);
+    console.log(reqObj);
+    $.ajax({
+      type: "POST",
+      url: "/developer/chatRoom/uploadDocument",
+      data: reqObj,
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        socket.emit("Uploaded", data);
+        alert("File uploaded Succesfully");
+      },
+      error: function (e) {
+        console.log(e);
+        alert("somthing went wrong while uploding document");
+      },
+    });
+  });
+});
 
 socket.on("sending data", (data) => {
-    $.ajax({
-        type: 'GET',
-        url: '/developer/loadHome',
-        success: function(data) {
-            $('.append-info').remove()
-            data.forEach(element => {
-
-                if (element.developerId) {
-                    $('#toAppend').prepend(`
+  $.ajax({
+    type: "GET",
+    url: "/developer/loadHome",
+    success: function (data) {
+      $(".append-info").remove();
+      data.forEach((element) => {
+        if (element.developerId) {
+          $("#toAppend").prepend(`
               <div class="append-info">
               <div class="info-image">
               <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200" >
@@ -57,8 +58,8 @@ socket.on("sending data", (data) => {
               </div>
               </div>
           <div class="border-bottom"></div>`);
-                } else {
-                    $('#toAppend').prepend(`
+        } else {
+          $("#toAppend").prepend(`
               <div class="append-info">
               <div class="info-image">
               <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200"  >
@@ -71,12 +72,12 @@ socket.on("sending data", (data) => {
               </div>
               </div>
           <div class="border-bottom"></div>`);
-                }
-            });
-        },
-        error: function(e) {
-            console.log(e);
-            alert('Error while loading profile')
         }
-    })
-})
+      });
+    },
+    error: function (e) {
+      console.log(e);
+      alert("Error while loading profile");
+    },
+  });
+});

@@ -17,6 +17,19 @@ $(document).ready(() => {
       success: function (data) {
         $(".b").remove();
         var flag = 0;
+        console.log(data);
+        var buttonHtml;
+        // if (data && ) {
+        //   buttonHtml =
+        //     '<button type="button" class="edit followClass" class="btn btn-primary" data-userid="' +
+        //     data._id +
+        //     '">Unfollow</button>';
+        // } else {
+        //   buttonHtml =
+        //     '<button type="button" class="edit followClass" class="btn btn-primary" data-userid="' +
+        //     data._id +
+        //     '">Follow</button>';
+        // }
         if (data.students) {
           var students = Object.keys(data.students);
           students.forEach((element) => {
@@ -65,11 +78,18 @@ $(document).ready(() => {
           $("#append").append(`<div class="chatRoom" >
                     <div class="chatRoomLeft">
                         <span class="username">${data.name}</span>
-                        <div ><span class="twitter-handle">${data.name}</span></div>
-                        <div class="follow">0 Following</div>
+                        <div ><span class="twitter-handle">${
+                          data.description
+                        }</span></div>
+                        <div class="follow">${
+                          Object.keys(data.developer).length
+                        } Following</div>
                     </div>
                         
-                    <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${data._id}" >Follow</button>               
+                    <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${
+                      data._id
+                    }" >Follow</button>   
+                      ${buttonHtml}           
               </div>`);
         }
       },

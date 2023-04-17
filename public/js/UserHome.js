@@ -7,33 +7,84 @@ $(document).ready(() => {
       data.forEach((element) => {
         if (element.developerId) {
           $("#toAppend").prepend(`
-              <div class="append-info">
-              <div class="info-image">
-              <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200" >
-              </div>
-              <div class ="info-data">
-              <div class="data-name">Chat Room name : ${element?.name}</div>
-              <div class="data-description"> <b>Description for the document</b> : <br>${element?.description}
-              
-              </div>
-              <div class="data-name"> <b>Uploaded by</b> :${element?.developerId?.name} </div>
-              </div>
-              </div>
-          <div class="border-bottom"></div>`);
+               <div class="postWrapper">
+                                <div class="postTop">
+                                    <div class="postTopLeft">
+                                        <div class="postChatUsername">
+                                            <span class="postChatroom">
+                                            ${element?.name}
+                                            </span>
+                                            <span class="postUsername">
+                                                ${element?.developerId?.name}
+                                            </span>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                                <div class="postCenter">
+                                    <img class="postImg" src="http://localhost:3000/images/${element?.fileUpload?.filename}" alt="" />
+                                    <span class="postText"> ${element?.description} </span>
+                                </div>
+                                 <div class="postBottom">
+                                    <div class="postBottomLeft">
+                                    <img
+                                        class="likeIcon"
+                                        src="http://localhost:3000/img/like.png"
+                                        alt=""
+                            
+                                    />
+                                    <img
+                                        class="likeIcon"
+                                        src="http://localhost:3000/img/heart.png"
+                                        alt=""
+                    
+                                    />
+                                    <span class="postLikeCounter">2 people like this</span>
+                                    </div>
+                                    <div class="postBottomRight">
+                                        <span class="postCommentText">9 comments</span>
+                                    </div>
+                                </div>`);
         } else {
           $("#toAppend").prepend(`
-              <div class="append-info">
-              <div class="info-image">
-              <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200"  >
-              </div>
-              <div class ="info-data">
-              <div class="data-name">Chat Room name : ${element?.name}</div>
-              <div class="data-description"> <b>Description for the document</b> : <br>${element?.description}
-              </div>
-              <div class="data-name"> <b>Uploaded by</b> :${element?.managerId.name} </div>
-              </div>
-              </div>
-          <div class="border-bottom"></div>`);
+              <div class="postWrapper">
+                                <div class="postTop">
+                                    <div class="postTopLeft">
+                                        <div class="postChatUsername">
+                                            <span class="postChatroom">
+                                            ${element?.name}
+                                            </span>
+                                            <span class="postUsername">
+                                                ${element?.managerId?.name}
+                                            </span>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                                <div class="postCenter">
+                                    <img class="postImg" src="http://localhost:3000/images/${element?.fileUpload?.filename}" alt="" />
+                                    <span class="postText"> ${element?.description} </span>
+                                </div>
+                                 <div class="postBottom">
+                                    <div class="postBottomLeft">
+                                    <img
+                                        class="likeIcon"
+                                        src="http://localhost:3000/img/like.png"
+                                        alt=""
+                            
+                                    />
+                                    <img
+                                        class="likeIcon"
+                                        src="http://localhost:3000/img/heart.png"
+                                        alt=""
+                    
+                                    />
+                                    <span class="postLikeCounter">2 people like this</span>
+                                    </div>
+                                    <div class="postBottomRight">
+                                        <span class="postCommentText">9 comments</span>
+                                    </div>
+                                </div>`);
         }
       });
     },

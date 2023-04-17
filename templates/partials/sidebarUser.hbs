@@ -1,37 +1,37 @@
 <ul class="nav flex-column">
-    
-    <li class="nav-item">
-        <a class="nav-link active" href="/developer/home">
-            <span class="icon">
-                <i class="fa fa-home"></i>
-            </span>
-            <span>Home</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a id="userProfile" class="nav-link" href="/developer/profile" >
-            <span class="icon">
-                <i class="fa fa-user-o"></i>
-            </span>
-            <span>Profile</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a id="userProfile" class="nav-link" href="/loadSearch" >
-            <span class="icon">
-                <i class="fa fa-search"></i>
-            </span>
-            <span>Search</span>
-        </a>
-    </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="/developer/loadSearch">
-            <span>Chat room Details</span>
-        </a>
-    </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/developer/home">
+      <span class="icon">
+        <i class="fa fa-home"></i>
+      </span>
+      <span>Home</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a id="userProfile" class="nav-link" href="/developer/profile">
+      <span class="icon">
+        <i class="fa fa-user-o"></i>
+      </span>
+      <span>Profile</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a id="userProfile" class="nav-link" href="/loadSearch">
+      <span class="icon">
+        <i class="fa fa-search"></i>
+      </span>
+      <span>Search</span>
+    </a>
+  </li>
 
-    {{!-- <li class="nav-item">
+  <li class="nav-item">
+    <a class="nav-link" href="/developer/loadSearch">
+      <span>Chat room Details</span>
+    </a>
+  </li>
+
+  {{! <li class="nav-item">
         <a class="nav-link" href="/followers">
             <span></span>
         </a>
@@ -40,31 +40,46 @@
         <a class="nav-link" href="/following">
             <span>Following</span>
         </a>
-    </li> --}}
-    <li class="nav-item">
-        <a class="nav-link" href="/developer/logout">
-            <span id="logoutUser">Log out</span>
-        </a>
-    </li>
-    <li class="uploadButton">
-        <button type="button" class="signup " class="btn btn-primary " data-toggle="modal"
-            data-target="#exampleModal">Upload
-        </button>
-    </li>
+    </li> }}
+  <li class="nav-item">
+    <a class="nav-link" href="/developer/logout">
+      <span id="logoutUser">Log out</span>
+    </a>
+  </li>
+  <li class="uploadButton">
+    <button
+      type="button"
+      class="signup"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#exampleModal"
+    >Upload
+    </button>
+  </li>
 </ul>
 
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Upload here!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload here!</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {{! <div class="modal-body">
                 <form id="modalCreateUpload" name="modalCreateUpload" enctype="multipart/form-data">
                     <div class="form-group">
                         <input  type="text" id="side-tweet-name" name="name" class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="Chat room name" required='true'></input>
@@ -78,7 +93,7 @@
                     
                     <button id="side-tweet" form="modalCreateTweet" type="submit" class="btn btn-primary " data-dismiss="modal" aria-hidden="true">Post</button>
                 </form>
-            </div>
-        </div>
+            </div> }}
     </div>
+  </div>
 </div>
