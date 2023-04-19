@@ -124,19 +124,24 @@ const UploadDocument = async function(req, res) {
     const file = req.file
     try {
         const chatRoom = await ClassRoom.findOne({ name: req.body.name })
+        if(!chatRoom) {
+            throw new Error("Chat room not found")
+        }
         const developer = Object.keys(chatRoom.developer);
         var flag = 0
 
         if (developer.length > 0) {
-            developer.forEach(element => {
-                if (element != req.developer._id) {
-                    throw new Error("Developer does not belong to class")
-                } else {
+            for(let i = 0; i < developer.length; i++) {
+                if (developer[i] == req.developer._id.toString()) {
                     flag = 1
+                    break;
                 }
-            });
+            }
+            if(!flag) {
+                throw new Error("Developer does not belong to chat room")
+            }
         } else {
-            throw new Error("Developer does not belong to class")
+            throw new Error("Developer does not belong to chat room")
         }
         if (flag == 1) {
             const uploadDocument = new UploadDocuments({

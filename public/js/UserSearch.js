@@ -30,8 +30,8 @@ $(document).ready(() => {
         //     data._id +
         //     '">Follow</button>';
         // }
-        if (data.students) {
-          var students = Object.keys(data.students);
+        if (data.developer) {
+          var students = Object.keys(data.developer);
           students.forEach((element) => {
             if (element == query) {
               return (flag = 1);
@@ -55,6 +55,7 @@ $(document).ready(() => {
                               } Following</div>
                               
                               </div>`);
+                              
           } else {
             $("#append").append(`<div class="row border-top b" >
                                   <img class="developer" src="/img/apple-icon-114x114.png" alt="">
@@ -65,7 +66,7 @@ $(document).ready(() => {
                                   </button>
                               </div>
                               <div class="row b"><span class="twitter-handle b">${
-                                data.description
+                                data?.description
                               }</span></div>
                               <div class="row b">
                               <div class="follow">${
