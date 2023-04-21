@@ -38,49 +38,11 @@ $(document).ready(() => {
             }
           });
           if (flag == 1) {
-            $("#append").append(`<div class="row border-top b" >
-                                  <img class="developer" src="/img/apple-icon-114x114.png" alt="">
-                                  <span class="username">${data.name}</span>
-                                  <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${
-                                    data._id
-                                  }"  >Unfollow
-                                  </button>
-                              </div>
-                              <div class="row b"><span class="twitter-handle b">${
-                                data.description
-                              }</span></div>
-                              <div class="row b">
-                              <div class="follow">${
-                                Object.keys(data.developer).length
-                              } Following</div>
-                              
-                              </div>`);
-                              
-          } else {
-            $("#append").append(`<div class="row border-top b" >
-                                  <img class="developer" src="/img/apple-icon-114x114.png" alt="">
-                                  <span class="username">${data.name}</span>
-                                  <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${
-                                    data._id
-                                  }" >Follow
-                                  </button>
-                              </div>
-                              <div class="row b"><span class="twitter-handle b">${
-                                data?.description
-                              }</span></div>
-                              <div class="row b">
-                              <div class="follow">${
-                                Object.keys(data.developer).length
-                              } Following</div>
-                              
-                              </div>`);
-          }
-        } else {
-          $("#append").append(`<div class="chatRoom" >
+            $("#append").append(`<div class="chatRoom" >
                     <div class="chatRoomLeft">
                         <span class="username">${data.name}</span>
                         <div ><span class="twitter-handle">${
-                          data.description
+                          data?.description
                         }</span></div>
                         <div class="follow">${
                           Object.keys(data.developer).length
@@ -89,8 +51,40 @@ $(document).ready(() => {
                         
                     <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${
                       data._id
-                    }" >Follow</button>   
-                      ${buttonHtml}           
+                    }" >Unfollow</button>           
+              </div>`);
+          } else {
+            $("#append").append(`<div class="chatRoom" >
+                    <div class="chatRoomLeft">
+                        <span class="username">${data.name}</span>
+                        <div ><span class="twitter-handle">${
+                          data?.description
+                        }</span></div>
+                        <div class="follow">${
+                          Object.keys(data.developer).length
+                        } Following</div>
+                    </div>
+                        
+                    <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${
+                      data._id
+                    }" >Follow</button>           
+              </div>`);
+          }
+        } else {
+          $("#append").append(`<div class="chatRoom" >
+                    <div class="chatRoomLeft">
+                        <span class="username">${data.name}</span>
+                        <div ><span class="twitter-handle">${
+                          data?.description
+                        }</span></div>
+                        <div class="follow">${
+                          Object.keys(data.developer).length
+                        } Following</div>
+                    </div>
+                        
+                    <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${
+                      data._id
+                    }" >Follow</button>           
               </div>`);
         }
       },
@@ -125,7 +119,7 @@ $(document).ready(() => {
             }
           });
           if (flag == 1) {
-            $("button.followClass").html("UnFollow");
+            $("button.followClass").html("Unfollow");
           } else {
             $("button.followClass").html("Follow");
           }
