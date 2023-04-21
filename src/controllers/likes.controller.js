@@ -13,7 +13,8 @@ const likeDocumentController = async function(req, res) {
             })
             try {
                 const uploadedDocument = await UploadDocuments.findOne({ _id: req.body.postId })
-                uploadedDocument.likeCount = uploadedDocument.likeCount + 1
+                uploadedDocument.likeCount = uploadedDocument.likeCount + 1;
+                uploadedDocument.likedBy.push(req.body.UserId)
                 await uploadedDocument.save()
                 await like.save()
                 res.status(201).send({ like, UploadDocuments })
@@ -22,7 +23,12 @@ const likeDocumentController = async function(req, res) {
             }
         } else {
             const uploadedDocument = await UploadDocuments.findOne({ _id: req.body.postId })
-            uploadedDocument.likeCount = uploadedDocument.likeCount - '1'
+            uploadedDocument.likeCount = uploadedDocument.likeCount - '1';
+            var index = uploadedDocument.likedBy.indexOf(req.body.UserId);
+                if (index !== -1) {
+                uploadedDocument.likedBy.splice(index, 1);
+                }
+                
             await uploadedDocument.save()
             await like.remove()
             res.status(201).send({ like: false })

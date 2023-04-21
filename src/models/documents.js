@@ -32,6 +32,10 @@ const documentSchema = new mongoose.Schema({
         default: 0,
         type: Number
     },
+    likedBy: {
+        type: [String],
+        default: []
+    }
 }, {
     timestamps: true
 })

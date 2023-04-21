@@ -76,12 +76,13 @@ $(document).ready((e) => {
                                         alt=""
                     
                                     />
-                                    <button class="invoke-like" data-userId="${element?.developerId?._id}" onclick="likePost(event)">
+                                    <button class="invoke-like" data-userId="${element.managerId._id}" data-postId="${element?._id}" data-isManager="1" onclick="likePost(event)">
                                     <img
-                                        class="likeIcon invoke-like"
-                                        src="http://localhost:3000/img/heart.png"
-                                        alt=""
-                    
+                                    data-userId="${element.managerId._id}" data-postId="${element?._id}" data-isManager="1"
+                                    class="likeIcon"
+                                    src="http://localhost:3000/img/${element.likedBy.indexOf(element.managerId._id) >= 0 ? 'heart.png ' : 'like.png' } "
+                                    alt=""
+                        
                                     />
                                 </button>
                                     <span class="postLikeCounter">2 people like this</span>
@@ -103,9 +104,9 @@ $(document).ready((e) => {
 
 function likePost(e) {
   e.preventDefault();
-  let userId = e.target.dataset.userid.split('/')[0];
-  let postId = e.target.dataset.userid.split('/')[1];
-  let isManager = e.target.dataset.userid.split('/')[2];
+  let userId = e.target.dataset.userid;
+  let postId = e.target.dataset.postid;
+  let isManager = e.target.dataset.ismanager;
   let url = isManager == '0' ? '/developer/post/likeDocument' : '/manager/post/likeDocument'
   var data = {
       UserId: userId,
@@ -121,12 +122,38 @@ function likePost(e) {
       data: JSON.stringify(data),
       dataType: "json",
       success: function (data) {
-        window.location.href = data.redirect;
+        // window.location.href = data.redirect;
+        console.log(data);
+        if(!data.like) {
+          // add image for non liked image
+          document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML = '';
+          document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML = (`
+            <img
+            data-userId="${userId}" data-postId="${postId}" data-isManager="${isManager}"
+                class="likeIcon invoke-like"
+                src="http://localhost:3000/img/like.png"
+                alt=""
+
+            />`)
+        } else {
+           // add image for liked image
+          document.querySelectorAll(`[data-postId="${data.like.postId}"]`)[0].innerHTML = '';
+          document.querySelectorAll(`[data-postId="${data.like.postId}"]`)[0].innerHTML = (`
+            <img
+            data-userId="${data?.like?.UserId}" data-postId="${data?.like?.postId}" data-isManager="${isManager}"
+                class="likeIcon invoke-like new"
+                src="http://localhost:3000/img/heart.png"
+                alt=""
+
+            />
+            `)
+        }
+        
       },
-      error: function () {
-        alert("Error while login manager");
+      error: function (e) {
+        console.log(e)
+        alert("Error while login manager",e);
       },
     });
   
 }
-

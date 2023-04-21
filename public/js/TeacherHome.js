@@ -58,19 +58,13 @@ $(document).ready(() => {
                                 </div>
                                  <div class="postBottom">
                                     <div class="postBottomLeft">
-                                    <img
-                                        class="likeIcon"
-                                        src="http://localhost:3000/img/like.png"
-                                        alt=""
-                            
-                                    />
+
                                     <button class="invoke-like" data-userId="${element.developerId._id}" data-postId="${element?._id}" data-isManager="0" onclick="likePost(event)" >
                                     <img
                                     data-userId="${element.developerId._id}" data-postId="${element?._id}" data-isManager="0" 
-                                        class="likeIcon invoke-like"
-                                        src="http://localhost:3000/img/heart.png"
-                                        alt=""
-                    
+                                    class="likeIcon"
+                                    src="http://localhost:3000/img/${element.likedBy.indexOf(element.developerId._id) >= 0 ? 'heart.png ' : 'like.png' } "
+                                    alt=""
                                     />
                                 </button>
                                     <span class="postLikeCounter">2 people like this</span>
@@ -102,19 +96,14 @@ $(document).ready(() => {
                                 </div>
                                  <div class="postBottom">
                                     <div class="postBottomLeft">
-                                    <img
-                                        class="likeIcon"
-                                        src="http://localhost:3000/img/like.png"
-                                        alt=""
-                            
-                                    />
+
                                     <button class="invoke-like" data-userId="${element.managerId._id}" data-postId="${element?._id}" data-isManager="1" onclick="likePost(event)">
                                     <img
                                     data-userId="${element.managerId._id}" data-postId="${element?._id}" data-isManager="1"
-                                        class="likeIcon invoke-like"
-                                        src="http://localhost:3000/img/heart.png"
-                                        alt=""
-                    
+                                    class="likeIcon"
+                                    src="http://localhost:3000/img/${element.likedBy.indexOf(element.managerId._id) >= 0 ? 'heart.png ' : 'like.png' } "
+                                    alt=""
+                        
                                     />
                                 </button>
                                     <span class="postLikeCounter"></span>
@@ -166,7 +155,7 @@ function likePost(e) {
             <img
             data-userId="${userId}" data-postId="${postId}" data-isManager="${isManager}"
                 class="likeIcon invoke-like"
-                src="http://localhost:3000/img/heart.png"
+                src="http://localhost:3000/img/like.png"
                 alt=""
 
             />`)
