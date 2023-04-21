@@ -3,6 +3,8 @@ require('./src/db/mongoose')
 const userRouter = require('./src/routers/developer')
 const teacherRouter = require('./src/routers/manager')
 const chatRoomRouter = require('./src/routers/chatRoom')
+const likeRouter = require('./src/routers/likes')
+const replyRouter = require('./src/routers/reply')
     //const taskRouter = require('./src/routers/task')
 const path = require('path')
 const hbs = require('hbs')
@@ -50,33 +52,14 @@ io.on("connection", (socket) => {
 app.get("", (req, res) => {
   res.render("login");
 });
-// app.get("/Userhome", (req, res) => {
-//     res.render('UserHome')
-// })
-// app.get("/Teacherhome", (req, res) => {
-//         res.render('TeacherHome')
-//})
-// app.get("/searchUser", (req, res) => {
-//     res.render('UserSearch')
-// })
-// app.get("/searchTeacher", (req, res) => {
-//     res.render('TeacherSearch')
-// })
-// app.get("/TeacherFollowing", (req, res) => {
-//         res.render('TeacherFollowing')
-//})
-// app.get("/teacher/profile", (req, res) => {
-//         res.render('TeacherProfile')
-//     })
-// app.get("/user/profile", (req, res) => {
-//     res.render('UserProfile')
-// })
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(userRouter);
 app.use(teacherRouter)
 app.use(chatRoomRouter)
+app.use(likeRouter)
+app.use(replyRouter)
 app.use(fileUpload({
     createParentPath: true
 }));

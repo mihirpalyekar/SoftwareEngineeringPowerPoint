@@ -345,3 +345,8 @@ h6 {
   justify-content: space-between;
   width: 100%;
 }
+
+.invoke-like {
+  border: none;
+  background: none;
+}

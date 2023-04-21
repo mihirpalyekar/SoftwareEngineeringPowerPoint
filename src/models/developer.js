@@ -3,6 +3,7 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Tasks = require('./chatRoom')
+const DocumentData = require('./documents')
 
 const developerSchema = new mongoose.Schema({
     name: {
@@ -68,6 +69,12 @@ const developerSchema = new mongoose.Schema({
 
 developerSchema.virtual('tasks', {
     ref: 'Task',
+    localField: '_id',
+    foreignField: 'owner'
+})
+
+developerSchema.virtual('documentData', {
+    ref: 'DocumentData',
     localField: '_id',
     foreignField: 'owner'
 })

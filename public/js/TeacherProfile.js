@@ -76,6 +76,14 @@ $(document).ready((e) => {
                                         alt=""
                     
                                     />
+                                    <button class="invoke-like" data-userId="${element?.developerId?._id}" onclick="likePost(event)">
+                                    <img
+                                        class="likeIcon invoke-like"
+                                        src="http://localhost:3000/img/heart.png"
+                                        alt=""
+                    
+                                    />
+                                </button>
                                     <span class="postLikeCounter">2 people like this</span>
                                     </div>
                                     <div class="postBottomRight">
@@ -88,4 +96,37 @@ $(document).ready((e) => {
       alert("somthing went wrong while loading document");
     },
   });
+  $(".invoke-like").click((e) => {
+    console.log("Button clicked 2",e);
+  });
 });
+
+function likePost(e) {
+  e.preventDefault();
+  let userId = e.target.dataset.userid.split('/')[0];
+  let postId = e.target.dataset.userid.split('/')[1];
+  let isManager = e.target.dataset.userid.split('/')[2];
+  let url = isManager == '0' ? '/developer/post/likeDocument' : '/manager/post/likeDocument'
+  var data = {
+      UserId: userId,
+      postId: postId
+  };
+
+    $.ajax({
+      type: "POST",
+      url:url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify(data),
+      dataType: "json",
+      success: function (data) {
+        window.location.href = data.redirect;
+      },
+      error: function () {
+        alert("Error while login manager");
+      },
+    });
+  
+}
+

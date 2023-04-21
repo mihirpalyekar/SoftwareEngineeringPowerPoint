@@ -27,7 +27,7 @@ const replySchema = new mongoose.Schema({
 
 replySchema.pre('remove', async function(next) {
     const reply = this
-    await Like.deleteMany({ replyId: reply._id })
+    await Like.deleteMany({ postReplyId: reply._id })
     next()
 })
 

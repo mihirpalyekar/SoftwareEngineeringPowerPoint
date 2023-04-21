@@ -1,17 +1,18 @@
+const path = require('path')
 const Like = require('../models/likes')
 const UploadDocuments = require('../models/documents')
 
-const likeDocument = async function(req, res) {
+const likeDocumentController = async function(req, res) {
     try {
-        const like = await Like.findOne({ postId: req.body.id, UserId: req.user._id })
+        const like = await Like.findOne({ UserId: req.body.UserId, postId: req.body.postId })
         if (!like) {
             const like = new Like({
                 ...req.body,
-                UserId: req.user._id,
-                postId: req.body.id
+                UserId: req.body.UserId,
+                postId: req.body.postId
             })
             try {
-                const uploadedDocument = await UploadDocuments.findOne({ _id: req.body.id })
+                const uploadedDocument = await UploadDocuments.findOne({ _id: req.body.postId })
                 uploadedDocument.likeCount = uploadedDocument.likeCount + 1
                 await uploadedDocument.save()
                 await like.save()
@@ -20,18 +21,17 @@ const likeDocument = async function(req, res) {
                 res.status(400).send(e)
             }
         } else {
-            const uploadedDocument = await UploadDocuments.findOne({ _id: req.body.id })
+            const uploadedDocument = await UploadDocuments.findOne({ _id: req.body.postId })
             uploadedDocument.likeCount = uploadedDocument.likeCount - '1'
             await uploadedDocument.save()
             await like.remove()
-            res.status(200).send()
+            res.status(201).send({ like: false })
         }
     } catch (e) {
         res.status(500).send()
     }
 }
 
-
 module.exports = {
-    likeDocument,
+    likeDocumentController
 }

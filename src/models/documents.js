@@ -36,5 +36,12 @@ const documentSchema = new mongoose.Schema({
     timestamps: true
 })
 
+documentSchema.pre('remove', async function(next) {
+    const document = this
+    await Reply.deleteMany({ postId: document._id })
+    await Like.deleteMany({ postId: document._id })
+    next()
+})
+
 const UploadDocuments = mongoose.model('UploadDocuments', documentSchema)
 module.exports = UploadDocuments;
