@@ -5,8 +5,9 @@ const Reply = require('../models/reply')
 const UploadDocuments = require('../models/documents')
 const replyController = require('../controllers/reply.controller')
 
-// router.post('/tweet/reply', auth, replyController.createReply)
-// router.delete('/tweet/reply/delete', auth, replyController.deleteReply)
-// router.post("/tweet/reply/like", auth, replyController.likeReply)
+router.post('/post/reply', replyController.createReply)
+router.delete('/post/reply/delete', replyController.deleteReply)
+router.post("/post/reply/like", replyController.likeReply)
+router.get("/post/reply", replyController.getReply)
 
 module.exports = router;

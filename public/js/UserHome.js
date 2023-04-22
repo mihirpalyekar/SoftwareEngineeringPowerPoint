@@ -62,7 +62,15 @@ $(document).ready(() => {
                                     } people like this</span>
                                     </div>
                                     <div class="postBottomRight" data-toggle="modal" data-target="#commentModal">
-                                        <span class="postCommentText">9 comments</span>
+                                        <span class="postCommentText"
+                                        data-userId="${
+                                          element.developerId._id
+                                        }" data-postId="${
+                element?._id
+              }" 
+              data-isManager="0" 
+              data-username=${element.developerId.name}
+                                        >9 comments</span>
                                     </div>
                                 </div>
                                    <div
@@ -104,9 +112,7 @@ $(document).ready(() => {
                             <span>Dummy comment content</span>
                         </div>
                     </div>
-
                 </div>
-            
             </div>
         </div>
     </div>
@@ -166,7 +172,15 @@ $(document).ready(() => {
                                     }  people like this</span>
                                     </div>
                                     <div class="postBottomRight" data-toggle="modal" data-target="#commentModal">
-                                        <span class="postCommentText">9 comments</span>
+                                        <span class="postCommentText"
+                                        data-userId="${
+                                          element.developerId._id
+                                        }" data-postId="${
+                element?._id
+              }" 
+              data-isManager="0" 
+              data-username=${element.developerId.name}
+                                        >9 comments</span>
                                     </div>
                                 </div>
                                 

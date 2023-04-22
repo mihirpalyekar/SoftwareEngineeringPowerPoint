@@ -20,6 +20,9 @@ const replySchema = new mongoose.Schema({
     likeCount: {
         type: Number,
         default: 0
+    },
+    userName: {
+        type: String,
     }
 }, {
     timestamps: true
