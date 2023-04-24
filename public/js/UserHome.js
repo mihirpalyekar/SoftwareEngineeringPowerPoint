@@ -51,7 +51,7 @@ $(document).ready(() => {
                                         element.developerId._id
                                       ) >= 0
                                         ? "heart.png "
-                                        : "like.png"
+                                        : "heartless.png"
                                     } "
                                     alt=""
                                     />
@@ -65,12 +65,10 @@ $(document).ready(() => {
                                         <span class="postCommentText"
                                         data-userId="${
                                           element.developerId._id
-                                        }" data-postId="${
-                element?._id
-              }" 
+                                        }" data-postId="${element?._id}" 
               data-isManager="0" 
               data-username=${element.developerId.name}
-                                        >9 comments</span>
+                                        >Comments</span>
                                     </div>
                                 </div>
                                    <div
@@ -90,6 +88,7 @@ $(document).ready(() => {
                     class="close"
                     data-dismiss="modal"
                     aria-label="Close"
+                    onclick= "clearInput()"
                     >
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -99,18 +98,16 @@ $(document).ready(() => {
                         <div class="modalCommentInput form-group">
                             <input  type="text" id="comment-content" name="comment" class="form-control" id="commentModalTextArea" rows="1" placeholder="Comment here" required='true'></input>
                         </div>
-                        <button id="comment-post1" form="modalCommentPost" type="submit" class="commentPostButton " data-dismiss="modal" aria-hidden="true">Post Comment</button>
+                        <button id="comment-post1" form="modalCommentPost" type="submit" class="commentPostButton " data-userId="${
+                          element.developerId._id
+                        }" data-postId="${
+            element?._id
+          }" data-isManager="0" aria-hidden="true" >Post Comment</button>
                     </form>
                 </div>
                 <hr class="commentHr">
                 <div class="modalAllComments">
                     <div class="modalCommentWrapper">
-                        <div class="modalCommentUsername">
-                            <span>Dummy Comment user</span>
-                        </div>
-                        <div class="modalCommentContent">
-                            <span>Dummy comment content</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -161,7 +158,7 @@ $(document).ready(() => {
                                         element.managerId._id
                                       ) >= 0
                                         ? "heart.png "
-                                        : "like.png"
+                                        : "heartless.png"
                                     } "
                                     alt=""
                         
@@ -174,13 +171,11 @@ $(document).ready(() => {
                                     <div class="postBottomRight" data-toggle="modal" data-target="#commentModal">
                                         <span class="postCommentText"
                                         data-userId="${
-                                          element.developerId._id
-                                        }" data-postId="${
-                element?._id
-              }" 
+                                          element.managerId._id
+                                        }" data-postId="${element?._id}" 
               data-isManager="0" 
-              data-username=${element.developerId.name}
-                                        >9 comments</span>
+              data-username=${element.managerId.name}
+                                        >Comments</span>
                                     </div>
                                 </div>
                                 
@@ -201,6 +196,7 @@ $(document).ready(() => {
                     class="close"
                     data-dismiss="modal"
                     aria-label="Close"
+                    onclick= "clearInput()"
                     >
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -210,18 +206,16 @@ $(document).ready(() => {
                         <div class="modalCommentInput form-group">
                             <input  type="text" id="comment-content" name="comment" class="form-control" id="commentModalTextArea" rows="1" placeholder="Comment here" required='true'></input>
                         </div>
-                        <button id="comment-post1" form="modalCommentPost" type="submit" class="commentPostButton " data-dismiss="modal" aria-hidden="true">Post Comment</button>
+                       <button id="comment-post1" form="modalCommentPost" type="submit" class="commentPostButton " data-userId="${
+                         element.managerId._id
+                       }" data-postId="${
+            element?._id
+          }" data-isManager="1"  aria-hidden="true" >Post Comment</button>
                     </form>
                 </div>
                 <hr class="commentHr">
                 <div class="modalAllComments">
                     <div class="modalCommentWrapper">
-                        <div class="modalCommentUsername">
-                            <span>Dummy Comment user</span>
-                        </div>
-                        <div class="modalCommentContent">
-                            <span>Dummy comment content</span>
-                        </div>
                     </div>
 
                 </div>
@@ -241,6 +235,10 @@ $(document).ready(() => {
     console.log("Button clicked 3", e);
   });
 });
+
+function clearInput() {
+  document.getElementById("comment-content").value = "";
+}
 
 function likePost(e) {
   e.preventDefault();
@@ -275,7 +273,7 @@ function likePost(e) {
             <img
             data-userId="${userId}" data-postId="${postId}" data-isManager="${isManager}"
                 class="likeIcon invoke-like"
-                src="http://localhost:3000/img/like.png"
+                src="http://localhost:3000/img/heartless.png"
                 alt=""
 
             />`;
