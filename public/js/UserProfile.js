@@ -42,6 +42,7 @@ $(document).ready((e) => {
     url: "/developer/chatRoom/getDocument",
     success: function (data) {
       data.forEach((element) => {
+        console.log(element);
         $("#toappend").append(`
       
                 <div class="postWrapper">
@@ -52,26 +53,97 @@ $(document).ready((e) => {
                                     ${element?.name}
                                 </span>
                                 <span class="postUsername">
-                                    Parth
+                                    ${element?.developerId?.name}
                                 </span>
                             </div>
                             <span class="postDate">28 April</span>
                         </div>
                     </div>
                     <div class="postCenter">
-                        <img class="postImg" src="http://localhost:3000/images/${element?.fileUpload?.filename}" alt="" />
+                        <img class="postImg" src="http://localhost:3000/images/${
+                          element?.fileUpload?.filename
+                        }" alt="" />
                         <span class="postText">${element?.description}</span>
                     </div>
                     <div class="postBottom">
                         <div class="postBottomLeft">
-                            <img class="likeIcon" src="http://localhost:3000/img/like.png" alt="" />
-                            <img class="likeIcon" src="http://localhost:3000/img/heart.png" alt="" />
-                            <span class="postLikeCounter">3 people like this</span>
+                            <button class="invoke-like" data-userId="${
+                              element.developerId._id
+                            }" data-postId="${
+          element?._id
+        }" data-isManager="0" onclick="likePost(event)" >
+                                    <img
+                                    data-userId="${
+                                      element.developerId._id
+                                    }" data-postId="${
+          element?._id
+        }" data-isManager="0" 
+                                    class="likeIcon"
+                                    src="http://localhost:3000/img/${
+                                      element.likedBy.indexOf(
+                                        element.developerId._id
+                                      ) >= 0
+                                        ? "heart.png "
+                                        : "heartless.png"
+                                    } "
+                                    alt=""
+                                    />
+                                </button>
+                            <span class="postLikeCounter">${
+                              element.likeCount
+                            }  people like this</span>
                         </div>
-                        <div class="postBottomRight">
-                            <span class="postCommentText">5  comments</span>
+                        <div class="postBottomRight" data-toggle="modal" data-target="#commentModal">
+                             <span class="postCommentText"
+                                        data-userId="${
+                                          element.developerId._id
+                                        }" data-postId="${element?._id}" 
+              data-isManager="0" 
+              data-username=${element.developerId.name}
+                                        >Comments</span>
                         </div>
                     </div>
+                    <div
+            class="modal fade"
+            id="commentModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="commentModalLabel"
+            aria-hidden="true"
+>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Comment</h5>
+                    <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    onclick= "clearInput()"
+                    >
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modalComment">
+                    <form id="modalCommentForm" name="modalCommentForm" enctype="multipart/form-data">
+                        <div class="modalCommentInput form-group">
+                            <input  type="text" id="comment-content" name="comment" class="form-control" id="commentModalTextArea" rows="1" placeholder="Comment here" required='true'></input>
+                        </div>
+                        <button id="comment-post1" form="modalCommentPost" type="submit" class="commentPostButton " data-userId="${
+                          element.developerId._id
+                        }" data-postId="${
+          element?._id
+        }" data-isManager="0" aria-hidden="true" >Post Comment</button>
+                    </form>
+                </div>
+                <hr class="commentHr">
+                <div class="modalAllComments">
+                    <div class="modalCommentWrapper">
+                    </div>
+                </div>
+            </div>
+        </div>
                 </div>
            
             `);
@@ -94,3 +166,65 @@ $(document).ready((e) => {
 //     </div>
 //     </div>
 // <div class="border-bottom"></div>`);
+
+function likePost(e) {
+  e.preventDefault();
+  let userId = e.target.dataset.userid;
+  let postId = e.target.dataset.postid;
+  let isManager = e.target.dataset.ismanager;
+  let url =
+    isManager == "0"
+      ? "/developer/post/likeDocument"
+      : "/manager/post/likeDocument";
+  var data = {
+    UserId: userId,
+    postId: postId,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: url,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(data),
+    dataType: "json",
+    success: function (data) {
+      // window.location.href = data.redirect;
+      console.log(data);
+      if (!data.like) {
+        // add image for non liked image
+        document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML =
+          "";
+        document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML = `
+            <img
+            data-userId="${userId}" data-postId="${postId}" data-isManager="${isManager}"
+                class="likeIcon invoke-like"
+                src="http://localhost:3000/img/heartless.png"
+                alt=""
+
+            />`;
+      } else {
+        // add image for liked image
+        document.querySelectorAll(
+          `[data-postId="${data.like.postId}"]`
+        )[0].innerHTML = "";
+        document.querySelectorAll(
+          `[data-postId="${data.like.postId}"]`
+        )[0].innerHTML = `
+            <img
+            data-userId="${data?.like?.UserId}" data-postId="${data?.like?.postId}" data-isManager="${isManager}"
+                class="likeIcon invoke-like new"
+                src="http://localhost:3000/img/heart.png"
+                alt=""
+
+            />
+            `;
+      }
+    },
+    error: function (e) {
+      console.log(e);
+      alert("Error while login manager", e);
+    },
+  });
+}

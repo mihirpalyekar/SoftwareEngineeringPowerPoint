@@ -58,7 +58,9 @@ $(document).ready(() => {
                                     <img class="postImg" src="http://localhost:3000/images/${
                                       element?.fileUpload?.filename
                                     }" alt="" />
-                                    <span class="postText"> This is the description of a post dasifggfasdkjgfhaskjfha lkajsdhflkjhafg jhasdlkjfhaslkj </span>
+                                    <span class="postText"> ${
+                                      element?.description
+                                    } </span>
                                 </div>
                                  <div class="postBottom">
                                     <div class="postBottomLeft">
@@ -81,22 +83,22 @@ $(document).ready(() => {
                                         element.developerId._id
                                       ) >= 0
                                         ? "heart.png "
-                                        : "like.png"
+                                        : "heartless.png"
                                     } "
                                     alt=""
                                     />
                                 </button>
-                                    <span class="postLikeCounter">2 people like this</span>
+                                    <span class="postLikeCounter">${
+                                      element.likeCount
+                                    }  people like this</span>
                                     </div>
                                     <div class="postBottomRight" data-toggle="modal" data-target="#commentModal">
                                     <span class="postCommentText" data-userId="${
                                       element.developerId._id
-                                    }" data-postId="${
-            element?._id
-          }" 
+                                    }" data-postId="${element?._id}" 
           data-isManager="0" 
           data-username=${element.developerId.name}>
-                                    9 comments</span>
+                                    Comments</span>
                                     </div>
                                     <div
                                       class="modal fade"
@@ -115,6 +117,7 @@ $(document).ready(() => {
                     class="close"
                     data-dismiss="modal"
                     aria-label="Close"
+                    onclick= "clearInput()"
                     >
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -128,7 +131,7 @@ $(document).ready(() => {
                           element.developerId._id
                         }" data-postId="${
             element?._id
-          }" data-isManager="0" data-dismiss="modal" aria-hidden="true">Post Comment</button>
+          }" data-isManager="0" aria-hidden="true">Post Comment</button>
                     </form>
                 </div>
                 <hr class="commentHr">
@@ -162,7 +165,9 @@ $(document).ready(() => {
                                     <img class="postImg" src="http://localhost:3000/images/${
                                       element?.fileUpload?.filename
                                     }" alt="" />
-                                    <span class="postText"> This is the description of a post dasifggfasdkjgfhaskjfha lkajsdhflkjhafg jhasdlkjfhaslkj </span>
+                                    <span class="postText"> ${
+                                      element?.description
+                                    }  </span>
                                 </div>
                                  <div class="postBottom">
                                     <div class="postBottomLeft">
@@ -184,13 +189,15 @@ $(document).ready(() => {
                                         element.managerId._id
                                       ) >= 0
                                         ? "heart.png "
-                                        : "like.png"
+                                        : "heartless.png"
                                     } "
                                     alt=""
                         
                                     />
                                 </button>
-                                    <span class="postLikeCounter"></span>
+                                    <span class="postLikeCounter">${
+                                      element.likeCount
+                                    }  people like this</span>
                                     </div>
                                     <div class="postBottomRight" data-toggle="modal" data-target="#commentModal">
                                     <span class="postCommentText" data-userId="${
@@ -199,7 +206,7 @@ $(document).ready(() => {
             element?._id
           }" data-isManager="1" 
           data-username=${element.managerId.name}>
-                                    9 comments</span>
+                                    Comments</span>
                                     </div>
                                     <div
                                       class="modal fade"
@@ -218,6 +225,7 @@ $(document).ready(() => {
                     class="close"
                     data-dismiss="modal"
                     aria-label="Close"
+                    onclick= "clearInput()"
                     >
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -231,7 +239,7 @@ $(document).ready(() => {
                           element.managerId._id
                         }" data-postId="${
             element?._id
-          }" data-isManager="1" data-dismiss="modal" aria-hidden="true">Post Comment</button>
+          }" data-isManager="1"  aria-hidden="true">Post Comment</button>
                     </form>
                 </div>
                 <hr class="commentHr">
@@ -309,6 +317,10 @@ function postComment(e) {
   // });
 }
 
+function clearInput() {
+  document.getElementById("comment-content").value = "";
+}
+
 function likePost(e) {
   e.preventDefault();
   let userId = e.target.dataset.userid;
@@ -342,7 +354,7 @@ function likePost(e) {
             <img
             data-userId="${userId}" data-postId="${postId}" data-isManager="${isManager}"
                 class="likeIcon invoke-like"
-                src="http://localhost:3000/img/like.png"
+                src="http://localhost:3000/img/heartless.png"
                 alt=""
 
             />`;
