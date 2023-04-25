@@ -1,3 +1,4 @@
+var currentUser = $('.headerDiv').data('username');
 $(document).ready(() => {
   $.ajax({
     type: "GET",

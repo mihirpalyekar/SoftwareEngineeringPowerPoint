@@ -1,3 +1,4 @@
+var currentUser = $('.headerDiv').data('username');
 $(document).ready(() => {
   $("#toAppend").on("click", "#comment-post1", function (event) {
     event.preventDefault();

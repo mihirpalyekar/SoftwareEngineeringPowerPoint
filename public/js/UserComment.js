@@ -1,3 +1,4 @@
+var currentUser = $('.headerDiv').data('username');
 $(document).ready(() => {
   $("#toAppend").on("click", "#comment-post1", function (event) {
     event.preventDefault();
@@ -68,7 +69,7 @@ function getCommentData(UserId,postId) {
                 $('.modalAllComments').prepend(`                    
                 <div class="modalCommentWrapper">
                 <div class="modalCommentUsername">
-                <span>Commented By: ${element.userName}</span>
+                <span>Commented By: ${currentUser}</span>
             </div>
                 <div class="modalCommentUsername">
                     <span>Comment: ${element.content}</span>
