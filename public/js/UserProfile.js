@@ -1,3 +1,7 @@
+var currentUser = $('.username').data('username');
+var userId = "";
+var postId = "";
+var username = "";
 $(document).ready((e) => {
   $.ajax({
     type: "GET",
@@ -44,16 +48,12 @@ $(document).ready((e) => {
       data.forEach((element) => {
         console.log(element);
         $("#toappend").append(`
-      
                 <div class="postWrapper">
                     <div class="postTop">
                         <div class="postTopLeft">
                             <div class="postChatUsername">
                                 <span class="postChatroom">
                                     ${element?.name}
-                                </span>
-                                <span class="postUsername">
-                                    ${element?.developerId?.name}
                                 </span>
                             </div>
                             <span class="postDate">28 April</span>
@@ -68,20 +68,20 @@ $(document).ready((e) => {
                     <div class="postBottom">
                         <div class="postBottomLeft">
                             <button class="invoke-like" data-userId="${
-                              element.developerId._id
+                              element.developerId
                             }" data-postId="${
           element?._id
         }" data-isManager="0" onclick="likePost(event)" >
                                     <img
                                     data-userId="${
-                                      element.developerId._id
+                                      element.developerId
                                     }" data-postId="${
           element?._id
         }" data-isManager="0" 
                                     class="likeIcon"
                                     src="http://localhost:3000/img/${
                                       element.likedBy.indexOf(
-                                        element.developerId._id
+                                        element.developerId
                                       ) >= 0
                                         ? "heart.png "
                                         : "heartless.png"
@@ -96,10 +96,10 @@ $(document).ready((e) => {
                         <div class="postBottomRight" data-toggle="modal" data-target="#commentModal">
                              <span class="postCommentText"
                                         data-userId="${
-                                          element.developerId._id
+                                          element.developerId
                                         }" data-postId="${element?._id}" 
               data-isManager="0" 
-              data-username=${element.developerId.name}
+              data-username=${element.developerId}
                                         >Comments</span>
                         </div>
                     </div>
@@ -131,7 +131,7 @@ $(document).ready((e) => {
                             <input  type="text" id="comment-content" name="comment" class="form-control" id="commentModalTextArea" rows="1" placeholder="Comment here" required='true'></input>
                         </div>
                         <button id="comment-post1" form="modalCommentPost" type="submit" class="commentPostButton " data-userId="${
-                          element.developerId._id
+                          element.developerId
                         }" data-postId="${
           element?._id
         }" data-isManager="0" aria-hidden="true" >Post Comment</button>
@@ -153,19 +153,61 @@ $(document).ready((e) => {
       alert("somthing went wrong while loading document");
     },
   });
-});
 
-//             <div class="append-info">
-//     <div class="info-image">
-//     <img src="http://localhost:3000/images/${element?.fileUpload?.filename}"  width="200" height="200" >
-//     </div>
-//     <div class ="info-data">
-//     <div class="data-name">Chat Room name : ${element?.name}</div>
-//     <div class="data-description"> <b>Description for the document</b> : <br>${element?.description}
-//     </div>
-//     </div>
-//     </div>
-// <div class="border-bottom"></div>`);
+  $(".invoke-like").click((e) => {
+    console.log("Button clicked 2", e);
+  });
+
+  $("#toappend").on("click", "#comment-post1", function (event) {
+    event.preventDefault();
+    let url = "/post/reply";
+    // let userId = userId;
+    // let postId = postId;
+    let isManager = event.target.dataset.ismanager;
+    // let username = event.target.dataset.username;
+    var data = {};
+    currentUser = $('.username').data('username');
+    $("#modalCommentForm")
+      .serializeArray()
+      .forEach((element) => {
+        if (element.value) {
+          data[element.name] = element.value;
+        }
+      });
+    var data = {
+      UserId: userId,
+      content: data.comment,
+      postId: postId,
+      username: currentUser,
+    };
+    $.ajax({
+      type: "POST",
+      url: url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify(data),
+      dataType: "json",
+      success: function (data) {
+        // window.location.href = data.redirect;
+        getCommentData(userId, postId);
+      },
+      error: function (e) {
+        console.log(e);
+        alert("Error while login manager", e);
+      },
+    });
+  });
+
+  $("#toappend").on("click", ".postCommentText", function (event) {
+    event.preventDefault();
+    console.log("button clicked");
+    userId = event.target.dataset.userid;
+    postId = event.target.dataset.postid;
+    username = currentUser;
+    getCommentData(userId, postId);
+  });
+});
 
 function likePost(e) {
   e.preventDefault();
@@ -221,6 +263,45 @@ function likePost(e) {
             />
             `;
       }
+    },
+    error: function (e) {
+      console.log(e);
+      alert("Error while login manager", e);
+    },
+  });
+}
+
+function getCommentData(UserId, postId) {
+  var data = {
+    UserId,
+    postId,
+  };
+  let url = "/post/reply";
+  $.ajax({
+    type: "GET",
+    url: url,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data,
+    dataType: "json",
+    success: function (data) {
+      // window.location.href = data.redirect;
+      $(".modalAllComments").empty();
+      if (data.length > 0) {
+        data.forEach((element) => {
+          $(".modalAllComments").prepend(`                    
+                <div class="modalCommentWrapper">
+                <div class="modalCommentUsername">
+                <span>Commented By: ${element.userName}</span>
+            </div>
+                <div class="modalCommentUsername">
+                    <span>Comment: ${element.content}</span>
+                </div>
+            </div>`);
+        });
+      }
+      console.log(data);
     },
     error: function (e) {
       console.log(e);

@@ -48,7 +48,7 @@ $(document).ready(() => {
     console.log("button clicked");
     userId = event.target.dataset.userid;
     postId = event.target.dataset.postid;
-    username = event.target.dataset.username;
+    username = currentUser;
     getCommentData(userId, postId);
   });
 });

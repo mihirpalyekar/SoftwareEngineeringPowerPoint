@@ -48,7 +48,7 @@ $(document).ready(() => {
     console.log("button clicked");
     userId = event.target.dataset.userid;
     postId = event.target.dataset.postid;
-    username = event.target.dataset.username;
+    username = currentUser;
     getCommentData(userId, postId);
   });
 });
@@ -75,7 +75,7 @@ function getCommentData(UserId, postId) {
           $(".modalAllComments").prepend(`                    
                 <div class="modalCommentWrapper">
                 <div class="modalCommentUsername">
-                <span>Commented By: ${currentUser}</span>
+                <span>Commented By: ${element.userName}</span>
             </div>
                 <div class="modalCommentContent">
                     <span>${element.content}</span>

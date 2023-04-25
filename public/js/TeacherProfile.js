@@ -1,3 +1,7 @@
+var currentUser = $('.username').data('username');
+var userId = "";
+var postId = "";
+var username = "";
 $(document).ready((e) => {
   $.ajax({
     type: "GET",
@@ -51,9 +55,6 @@ $(document).ready((e) => {
                                             <span class="postChatroom">
                                             ${element?.name}
                                             </span>
-                                            <span class="postUsername">
-                                                ${element?.managerId.name}
-                                            </span>
                                         </div>
                                     </div>
                                   
@@ -70,20 +71,20 @@ $(document).ready((e) => {
                                     <div class="postBottomLeft">
                                    
                                     <button class="invoke-like" data-userId="${
-                                      element.managerId._id
+                                      element.managerId
                                     }" data-postId="${
           element?._id
         }" data-isManager="1" onclick="likePost(event)">
                                     <img
                                     data-userId="${
-                                      element.managerId._id
+                                      element.managerId
                                     }" data-postId="${
           element?._id
         }" data-isManager="1"
                                     class="likeIcon"
                                     src="http://localhost:3000/img/${
                                       element.likedBy.indexOf(
-                                        element.managerId._id
+                                        element.managerId
                                       ) >= 0
                                         ? "heart.png "
                                         : "heartless.png"
@@ -98,11 +99,11 @@ $(document).ready((e) => {
                                     </div>
                                     <div class="postBottomRight" data-toggle="modal" data-target="#commentModal">
                                         <span class="postCommentText" data-userId="${
-                                          element.managerId._id
+                                          element.managerId
                                         }" data-postId="${
           element?._id
         }" data-isManager="1" 
-          data-username=${element.managerId.name}>
+          data-username=${element.managerId}>
                                     Comments</span>
                                     </div>
                                     <div
@@ -132,7 +133,7 @@ $(document).ready((e) => {
                             <input  type="text" id="comment-content" name="comment" class="form-control" id="commentModalTextArea" rows="1" placeholder="Comment here" required='true'></input>
                         </div>
                         <button id="comment-post1" form="modalCommentPost" type="submit" class="commentPostButton " data-userId="${
-                          element.managerId._id
+                          element.managerId
                         }" data-postId="${
           element?._id
         }" data-isManager="1"  aria-hidden="true">Post Comment</button>
@@ -155,6 +156,56 @@ $(document).ready((e) => {
   });
   $(".invoke-like").click((e) => {
     console.log("Button clicked 2", e);
+  });
+
+  $("#toappend").on("click", "#comment-post1", function (event) {
+    event.preventDefault();
+    let url = "/post/reply";
+    // let userId = userId;
+    // let postId = postId;
+    let isManager = event.target.dataset.ismanager;
+    // let username = event.target.dataset.username;
+    currentUser = $('.username').data('username');
+    var data = {};
+    $("#modalCommentForm")
+      .serializeArray()
+      .forEach((element) => {
+        if (element.value) {
+          data[element.name] = element.value;
+        }
+      });
+    var data = {
+      UserId: userId,
+      content: data.comment,
+      postId: postId,
+      username: currentUser,
+    };
+    $.ajax({
+      type: "POST",
+      url: url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify(data),
+      dataType: "json",
+      success: function (data) {
+        // window.location.href = data.redirect;
+        getCommentData(userId, postId);
+      },
+      error: function (e) {
+        console.log(e);
+        alert("Error while login manager", e);
+      },
+    });
+  });
+
+  $("#toappend").on("click", ".postCommentText", function (event) {
+    event.preventDefault();
+    console.log("button clicked");
+    userId = event.target.dataset.userid;
+    postId = event.target.dataset.postid;
+    username = currentUser;
+    getCommentData(userId, postId);
   });
 });
 
@@ -189,9 +240,9 @@ function likePost(e) {
           "";
         document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML = `
             <img
-            data-userId="${userId}" data-postId="${postId}" data-isManager="${isManager}"
+            data-userId="${userId}" data-postId="${postId}" data-isManager="1"
                 class="likeIcon invoke-like"
-                src="http://localhost:3000/img/like.png"
+                src="http://localhost:3000/img/heartless.png"
                 alt=""
 
             />`;
@@ -204,7 +255,7 @@ function likePost(e) {
           `[data-postId="${data.like.postId}"]`
         )[0].innerHTML = `
             <img
-            data-userId="${data?.like?.UserId}" data-postId="${data?.like?.postId}" data-isManager="${isManager}"
+            data-userId="${userId}" data-postId="${postId}" data-isManager="1"
                 class="likeIcon invoke-like new"
                 src="http://localhost:3000/img/heart.png"
                 alt=""
@@ -212,6 +263,47 @@ function likePost(e) {
             />
             `;
       }
+    },
+    error: function (e) {
+      console.log(e);
+      alert("Error while login manager", e);
+    },
+  });
+}
+
+
+
+function getCommentData(UserId, postId) {
+  var data = {
+    UserId,
+    postId,
+  };
+  let url = "/post/reply";
+  $.ajax({
+    type: "GET",
+    url: url,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data,
+    dataType: "json",
+    success: function (data) {
+      // window.location.href = data.redirect;
+      $(".modalAllComments").empty();
+      if (data.length > 0) {
+        data.forEach((element) => {
+          $(".modalAllComments").prepend(`                    
+                <div class="modalCommentWrapper">
+                <div class="modalCommentUsername">
+                <span>Commented By: ${element.userName}</span>
+            </div>
+                <div class="modalCommentUsername">
+                    <span>Comment: ${element.content}</span>
+                </div>
+            </div>`);
+        });
+      }
+      console.log(data);
     },
     error: function (e) {
       console.log(e);
