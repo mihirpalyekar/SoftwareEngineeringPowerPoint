@@ -1,4 +1,4 @@
-var currentUser = $('.headerDiv').data('username')
+var currentUser = $(".headerDiv").data("username");
 $(document).ready(() => {
   $("#creatClass").click((e) => {
     e.preventDefault();
@@ -23,9 +23,11 @@ $(document).ready(() => {
       dataType: "json",
       success: function (data) {
         alert("Chat room created Succesfully");
+        clearInput();
       },
       error: function (e) {
         alert("Chat room name already taken");
+        clearInput();
         console.log(e);
       },
     });
@@ -51,6 +53,9 @@ $(document).ready(() => {
                                                 ${element?.developerId?.name}
                                             </span>
                                         </div>
+                                        <span class="postDate">${new Date(
+                                          element.createdAt
+                                        ).toLocaleDateString()}</span>
                                     </div>
                                   
                                 </div>
@@ -158,6 +163,9 @@ $(document).ready(() => {
                                                 ${element?.managerId.name}
                                             </span>
                                         </div>
+                                        <span class="postDate">${new Date(
+                                          element.createdAt
+                                        ).toLocaleDateString()}</span>
                                     </div>
                                   
                                 </div>
@@ -266,6 +274,11 @@ $(document).ready(() => {
     console.log("postComment", e);
   });
 });
+
+function clearInput() {
+  document.getElementById("exampleFormControlTextarea11").value = "";
+  document.getElementById("exampleFormControlTextarea12").value = "";
+}
 
 function postComment(e) {
   e.preventDefault();

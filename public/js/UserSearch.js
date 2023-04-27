@@ -74,17 +74,11 @@ $(document).ready(() => {
           $("#append").append(`<div class="chatRoom" >
                     <div class="chatRoomLeft">
                         <span class="username">${data.name}</span>
-                        <div ><span class="twitter-handle">${
-                          data?.description
-                        }</span></div>
-                        <div class="follow">${
-                          Object.keys(data.developer).length
-                        } Following</div>
+                        <div ><span class="twitter-handle">${data?.description}</span></div>
+                        <div class="follow">${data.developerCount} Following</div>
                     </div>
                         
-                    <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${
-                      data._id
-                    }" >Follow</button>           
+                    <button type="button" class="edit followClass" class="btn btn-primary" data-userid = "${data._id}" >Follow</button>           
               </div>`);
         }
       },
