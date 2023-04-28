@@ -38,6 +38,7 @@ $(document).ready(() => {
     url: "/manager/loadHome",
     success: function (data) {
       data.forEach((element) => {
+        console.log(element);
         if (element.developerId) {
           let userId =
             element.developerId._id?.toString() + "/" + element?._id + "0";
