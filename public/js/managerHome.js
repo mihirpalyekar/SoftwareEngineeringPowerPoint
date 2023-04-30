@@ -144,8 +144,6 @@ $(document).ready(() => {
     </div>
                                 </div>`);
         } else {
-          let userId =
-            element.managerId._id?.toString() + "/" + element?._id + "1";
           $("#toAppend").prepend(`
            <div class="postWrapper">
                                 <div class="postTop">
@@ -257,65 +255,8 @@ $(document).ready(() => {
       alert("Error while loading profile");
     },
   });
-
-  $(".invoke-like").click(() => {
-    console.log("Button clicked 1");
-  });
-
-  $(".postComment").click((e) => {
-    console.log("postComment", e);
-  });
 });
 
-function postComment(e) {
-  e.preventDefault();
-  console.log("button clicked");
-  let url = "/post/reply";
-  let userId = "6431df1f073b421313df0b53";
-  let postId = "643f4f02e84ecc0d0287986f";
-  let isManager = "1";
-  var data = {
-    UserId: userId,
-    content: "this is my first comment",
-    postId: postId,
-  };
-  $.ajax({
-    type: "GET",
-    url: url,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: JSON.stringify(data),
-    dataType: "json",
-    success: function (data) {
-      // window.location.href = data.redirect;
-      console.log(data);
-    },
-    error: function (e) {
-      console.log(e);
-      alert("Error while login manager", e);
-    },
-  });
-
-  // $.ajax({
-  //   type: "POST",
-  //   url:url,
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   data: JSON.stringify(data),
-  //   dataType: "json",
-  //   success: function (data) {
-  //     // window.location.href = data.redirect;
-  //     console.log(data);
-
-  //   },
-  //   error: function (e) {
-  //     console.log(e)
-  //     alert("Error while login manager",e);
-  //   },
-  // });
-}
 
 function clearInput() {
   document.getElementById("comment-content").value = "";
@@ -344,10 +285,8 @@ function likePost(e) {
     data: JSON.stringify(data),
     dataType: "json",
     success: function (data) {
-      // window.location.href = data.redirect;
       console.log(data);
       if (!data.like) {
-        // add image for non liked image
         document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML =
           "";
         document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML = `
@@ -359,7 +298,6 @@ function likePost(e) {
 
             />`;
       } else {
-        // add image for liked image
         document.querySelectorAll(
           `[data-postId="${data.like.postId}"]`
         )[0].innerHTML = "";

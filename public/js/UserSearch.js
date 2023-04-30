@@ -19,17 +19,6 @@ $(document).ready(() => {
         var flag = 0;
         console.log(data);
         var buttonHtml;
-        // if (data && ) {
-        //   buttonHtml =
-        //     '<button type="button" class="edit followClass" class="btn btn-primary" data-userid="' +
-        //     data._id +
-        //     '">Unfollow</button>';
-        // } else {
-        //   buttonHtml =
-        //     '<button type="button" class="edit followClass" class="btn btn-primary" data-userid="' +
-        //     data._id +
-        //     '">Follow</button>';
-        // }
         if (data.developer) {
           var students = Object.keys(data.developer);
           students.forEach((element) => {

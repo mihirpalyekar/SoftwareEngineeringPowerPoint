@@ -6,10 +6,6 @@ $(document).ready(() => {
   $("#toAppend").on("click", "#comment-post1", function (event) {
     event.preventDefault();
     let url = "/post/reply";
-    // let userId = userId;
-    // let postId = postId;
-    let isManager = event.target.dataset.ismanager;
-    // let username = event.target.dataset.username;
     var data = {};
     $("#modalCommentForm")
       .serializeArray()
@@ -33,7 +29,6 @@ $(document).ready(() => {
       data: JSON.stringify(data),
       dataType: "json",
       success: function (data) {
-        // window.location.href = data.redirect;
         getCommentData(userId, postId);
       },
       error: function (e) {
@@ -68,7 +63,6 @@ function getCommentData(UserId, postId) {
     data,
     dataType: "json",
     success: function (data) {
-      // window.location.href = data.redirect;
       $(".modalAllComments").empty();
       if (data.length > 0) {
         data.forEach((element) => {

@@ -161,10 +161,7 @@ $(document).ready((e) => {
   $("#toappend").on("click", "#comment-post1", function (event) {
     event.preventDefault();
     let url = "/post/reply";
-    // let userId = userId;
-    // let postId = postId;
     let isManager = event.target.dataset.ismanager;
-    // let username = event.target.dataset.username;
     currentUser = $('.username').data('username');
     var data = {};
     $("#modalCommentForm")

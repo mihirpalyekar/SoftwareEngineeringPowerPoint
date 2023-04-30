@@ -264,10 +264,8 @@ function likePost(e) {
     data: JSON.stringify(data),
     dataType: "json",
     success: function (data) {
-      // window.location.href = data.redirect;
       console.log(data);
       if (!data.like) {
-        // add image for non liked image
         document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML =
           "";
         document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML = `
@@ -279,7 +277,6 @@ function likePost(e) {
 
             />`;
       } else {
-        // add image for liked image
         document.querySelectorAll(
           `[data-postId="${data.like.postId}"]`
         )[0].innerHTML = "";

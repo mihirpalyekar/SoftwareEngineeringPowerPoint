@@ -138,7 +138,7 @@ const searchClassRoom = async function(req, res) {
 const loadSearch = async function(req, res) {
     try {
         const developer = req.manager
-        res.render('TeacherSearch', { developer })
+        res.render('ManagerSearch', { developer })
     } catch (e) {
         res.status(500).send("Something went wrong while loading page")
     }
@@ -147,7 +147,7 @@ const loadSearch = async function(req, res) {
 const showHomePage = async function(req, res) {
     try {
         const developer = req.manager
-        res.render('TeacherHome', {
+        res.render('ManagerHome', {
             developer
         })
     } catch (e) {
@@ -157,7 +157,7 @@ const showHomePage = async function(req, res) {
 
 const Profile = async function(req, res) {
     const developer = req.manager
-    res.render('TeacherProfile', {
+    res.render('ManagerProfile', {
         developer
     })
 }

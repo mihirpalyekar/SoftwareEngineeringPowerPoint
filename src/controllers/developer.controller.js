@@ -119,8 +119,6 @@ var storage = multer.diskStorage({
 const Upload = multer({ storage: storage })
 
 const UploadDocument = async function(req, res) {
-    //if want to restrict the size and dimentions uncomment below line and replace  uploadDocument.fileUpload = file with uploadDocument.fileUpload = buffer
-    //const buffer = await sharp(req.file).resize({ width: 250, height: 250 }).png()
     const file = req.file
     try {
         const chatRoom = await ClassRoom.findOne({ name: req.body.name })
@@ -175,31 +173,6 @@ const getDocument = async function(req, res) {
         res.status(500).send("somthing went wrong while getting document");
     }
 }
-
-// const deleteAvatar = async function(req, res) {
-//     try {
-//         req.developer.avatar = undefined;
-//         await req.developer.save()
-//         res.send('success');
-//     } catch (e) {
-//         res.status(500).send()
-//     }
-// }
-
-// const getAvatar = async function(req, res) {
-//     try {
-//         const developer = await Developer.findById(req.body.id)
-
-//         if (!developer || !developer.avatar) {
-//             throw new Error("something is wrong")
-//         }
-
-//         res.set('Content-Type', 'image/png')
-//         res.send(developer.avatar)
-//     } catch (e) {
-//         res.status(500).send();
-//     }
-// }
 
 const classRoomFollow = async function(req, res) {
     const userProfile = req.developer
@@ -278,7 +251,6 @@ const loadClassRoom = async function(req, res) {
         try {
 
             const chatRoom = await ClassRoom.findOne({ name: req.body.name }).populate('owner', 'name email age')
-                //chatRoom.populate('owner', 'name email age').execPopulate()
 
             if (!chatRoom) {
                 return alert('Chat room not found')
@@ -289,47 +261,6 @@ const loadClassRoom = async function(req, res) {
             res.status(500).send("somthing went wrong")
         }
     }
-    // const Followers = async function(req, res) {
-    //     try {
-    //         const developer = req.developer
-    //         res.render('followers', {
-    //             developer
-    //         })
-    //     } catch (e) {
-    //         res.status(500).send("somthing went wrong")
-    //     }
-    // }
-
-// const Following = async function(req, res) {
-//     try {
-//         const developer = req.developer
-//         res.render('following', {
-//             developer
-//         })
-//     } catch (e) {
-//         res.status(500).send("somthing went wrong")
-//     }
-// }
-
-// const Searchuser = async function(req, res) {
-//     try {
-//         const developer = req.developer
-//         res.render('search', {
-//             developer
-//         })
-//     } catch (e) {
-//         res.status(500).send("somthing went wrong")
-//     }
-// }
-
-// const getData = async function(req, res) {
-//     try {
-//         const developer = req.developer
-//         res.send(developer)
-//     } catch (e) {
-//         res.status(500).send("somthing went wrong")
-//     }
-// }
 
 
 const loadHome = async function(req, res) {
@@ -346,17 +277,7 @@ const loadHome = async function(req, res) {
     });
     //console.log(documents);
     res.send(documents)
-        // $and: [{ chatRoomId: { $in: following } }, { managerId: { $exists: true } }]
-        // $and: [{ chatRoomId: { $in: following } }, { developerId: { $nin: req.developer._id } }]
-        // $or: [ { $and: [{ chatRoomId: { $in: following } }, { managerId: { $exists: true } }] }, { $and: [{ chatRoomId: { $in: following } }, { developerId: { $nin: req.developer._id } }] } ]
-        //const userFollowers = await Developer.find({ _id: { $in: followers } }, 'firstName lastName twitterHandle')
 }
-
-
-
-
-
-
 
 module.exports = {
     Register,
