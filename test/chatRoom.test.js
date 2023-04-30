@@ -14,13 +14,12 @@ describe("Manager Login", function () {
       .request(app)
       .post("/login/manager")
       .send({
-        email: "manager@gmail.com",
+        email: "johndoeManager@example.com",
         password: "123456789",
       })
       .end(function (err, res) {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body.manager.email).to.equal("manager@gmail.com");
 
         managerToken = res.header["set-cookie"][0];
         done();

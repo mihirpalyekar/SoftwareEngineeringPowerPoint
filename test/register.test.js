@@ -31,4 +31,23 @@ describe("Developer Registration", function () {
         done();
       });
   });
+
+  it("should register a new manager", function (done) {
+    chai
+      .request(app)
+      .post("/register/manager")
+      .send({
+        name: "John Doe Manager",
+        email: "johndoeManager@example.com",
+        password: "123456789",
+        userType: "manager",
+      })
+      .end(function (err, res) {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.property("manager");
+        expect(res.body).to.have.property("redirect").equal("/manager/home");
+        done();
+      });
+  });
 });
