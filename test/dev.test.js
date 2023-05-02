@@ -11,7 +11,7 @@ const expect = chai.expect;
 let managerToken = "";
 
 describe("GET /developer/loadHome", () => {
-  it("should log in a manager", function (done) {
+  it("should log in a developer", function (done) {
     chai
       .request(app)
       .post("/login/developer")
